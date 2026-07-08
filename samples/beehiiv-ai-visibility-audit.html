@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>beehiiv — AI Visibility Audit — Deep Mist AI</title>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1b201f; --muted:#5c6a68; --line:#e4e8e7;
+    --accent:#0f5c5a; --accent-2:#0f5c5a; --accent-soft:#e9f1f0; --card:#f7faf9;
+    --danger:#9a2f2f; --danger-soft:#f6ecec; --track:#eef2f1;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1413; --fg:#e7ecea; --muted:#98a7a4; --line:#28302e;
+      --accent:#4fb3ad; --accent-2:#63c7c0; --accent-soft:#16211f; --card:#161c1a;
+      --danger:#e59a9a; --danger-soft:#241716; --track:#1d2523;
+    }
+  }
+  *{box-sizing:border-box;}
+  body,.page{background:var(--bg); color:var(--fg);}
+  .page{max-width:900px; margin:0 auto; padding:0 40px 80px; font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .masthead{display:flex; align-items:baseline; justify-content:space-between; padding:26px 0 18px; border-bottom:2px solid var(--accent); margin-bottom:56px;}
+  .brandmark{font-family:var(--serif); font-weight:600; letter-spacing:.04em; color:var(--accent); font-size:20px;}
+  .brandmark.small{font-size:15px;}
+  .masthead-sub{font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted);}
+  h1,h2,h3{font-family:var(--serif); font-weight:600; color:var(--fg); line-height:1.2;}
+  h2{font-size:26px; margin:0 0 20px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+  h3{font-size:18px; margin:34px 0 12px; color:var(--accent);}
+  .cover{padding:20px 0 60px; text-align:left; border-bottom:1px solid var(--line); margin-bottom:60px;}
+  .cover-cat{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:14px;}
+  .cover-title{font-size:58px; margin:0 0 6px;}
+  .cover-date{color:var(--muted); font-size:15px; margin-bottom:40px;}
+  .cover-score{display:flex; align-items:baseline; gap:10px;}
+  .cover-score-num{font-family:var(--serif); font-size:112px; font-weight:600; color:var(--accent); line-height:.9;}
+  .cover-score-den{font-family:var(--serif); font-size:34px; color:var(--muted);}
+  .cover-label{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:10px 0 26px;}
+  .cover-verdict{font-family:var(--serif); font-size:24px; line-height:1.4; max-width:640px; margin:0;}
+  .sec{margin:0 0 60px;}
+  .lede{color:var(--muted); max-width:680px; margin:0 0 22px;}
+  .findings{list-style:none; padding:0; margin:0; counter-reset:f;}
+  .findings li{counter-increment:f; position:relative; padding:16px 0 16px 46px; border-bottom:1px solid var(--line); font-size:17px;}
+  .findings li:before{content:counter(f); position:absolute; left:0; top:14px; width:28px; height:28px; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-family:var(--serif); font-weight:600; display:flex; align-items:center; justify-content:center; font-size:14px;}
+  .tiles{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:6px 0 30px;}
+  .tile{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px 18px; border-top:3px solid var(--accent);}
+  .tile-danger{border-top-color:var(--danger);}
+  .tile-num{font-family:var(--serif); font-size:40px; font-weight:600; color:var(--fg); line-height:1;}
+  .tile-cap{font-size:12px; color:var(--muted); margin-top:8px; letter-spacing:.02em;}
+  .chart{width:100%; height:auto; margin:8px 0 24px; overflow:visible;}
+  .chart .grid{stroke:var(--line); stroke-width:1;}
+  .chart .axis{fill:var(--muted); font-size:12px; font-family:var(--sans);}
+  .chart .bar-label{fill:var(--fg); font-size:14px; font-family:var(--sans);}
+  .chart .bar-value{fill:var(--muted); font-size:13px; font-family:var(--sans); font-weight:600;}
+  .chart .bar-track{fill:var(--track);}
+  .chart .bar-fill{fill:var(--accent);}
+  .chart .bar-fill-muted{fill:var(--muted); opacity:.55;}
+  .tbl{width:100%; border-collapse:collapse; font-size:14.5px; margin:8px 0 10px;}
+  .tbl th{text-align:left; font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:2px solid var(--line);}
+  .tbl td{padding:12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .tbl .center{text-align:center;}
+  .tbl .strong{font-weight:700; color:var(--accent);}
+  .tbl.money td.q{font-weight:600; max-width:320px;}
+  .tbl.money td.comp{color:var(--danger); font-weight:500;}
+  .tbl.money tbody tr:hover{background:var(--accent-soft);}
+  .pill{display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:20px; padding:2px 10px; font-size:12px; font-weight:600;}
+  .q-meta{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-top:3px;}
+  .yes{color:var(--accent); font-weight:700;}
+  .no{color:var(--danger); font-weight:700;}
+  .danger{color:var(--danger); font-weight:700;}
+  .muted{color:var(--muted);}
+  .tbl-scroll{overflow-x:auto;}
+  .tbl.appendix{font-size:13.5px;}
+  .tbl.appendix td.excerpt{color:var(--muted); font-size:13px; max-width:360px;}
+  .mis{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--danger); border-radius:8px; padding:18px 20px; margin:0 0 16px;}
+  .mis-head{margin-bottom:8px;}
+  .engine-tag{display:inline-block; background:var(--accent); color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;}
+  .mis-q{font-weight:600; margin-left:8px;}
+  .mis-issue{color:var(--danger); font-weight:600; margin:4px 0 10px;}
+  .quote{margin:0; padding:12px 16px; border-left:2px solid var(--line); color:var(--muted); font-style:italic; background:var(--bg); font-size:13.5px;}
+  .recs{padding-left:0; margin:0; list-style:none; counter-reset:r;}
+  .recs li{counter-increment:r; position:relative; padding:14px 0 14px 44px; border-bottom:1px solid var(--line);}
+  .recs li:before{content:counter(r); position:absolute; left:0; top:12px; width:28px; height:28px; border-radius:6px; background:var(--accent); color:#fff; font-family:var(--serif); font-weight:600; display:flex; align-items:center; justify-content:center; font-size:14px;}
+  .method p{margin:0 0 12px; color:var(--fg);}
+  .method strong{color:var(--accent);}
+  .empty{color:var(--muted); font-style:italic; padding:16px 0;}
+  .footnote{margin-top:70px; padding-top:22px; border-top:2px solid var(--accent); font-size:12.5px; color:var(--muted); display:flex; flex-direction:column; gap:4px;}
+  .footnote .brandmark{margin-bottom:2px;}
+  @media (max-width:640px){ .page{padding:0 18px 60px;} .tiles{grid-template-columns:repeat(2,1fr);} .cover-title{font-size:40px;} .cover-score-num{font-size:80px;} }
+  @media print{ .page{max-width:none; padding:0;} .sec{page-break-inside:avoid;} .tbl.money tbody tr:hover{background:none;} }
+</style>
+<div class="page">
+  <header class="masthead">
+    <div class="brandmark">Deep&nbsp;Mist&nbsp;AI</div>
+    <div class="masthead-sub">AI Visibility Audit</div>
+  </header>
+
+  <section class="cover">
+    <div class="cover-cat">Newsletter platforms for creators &amp; media</div>
+    <h1 class="cover-title">beehiiv</h1>
+    <div class="cover-date">July 8, 2026</div>
+    <div class="cover-score">
+      <div class="cover-score-num">79</div>
+      <div class="cover-score-den">/ 100</div>
+    </div>
+    <div class="cover-label">Overall AI visibility score</div>
+    <p class="cover-verdict">Strong AI visibility — the priority now is defending the lead.</p>
+  </section>
+
+  <section class="sec">
+    <h2>1 &nbsp;Executive summary</h2>
+    <ul class="findings"><li>Across 3 AI engines, beehiiv scores <strong>79/100</strong> on competitive visibility — strong ai visibility — the priority now is defending the lead.</li><li>Strongest on <strong>ChatGPT</strong> (87/100); weakest on <strong>Perplexity</strong> (70/100).</li><li>Overall share of voice is <strong>46%</strong>, while <strong>Substack</strong> dominates the conversation.</li><li>In <strong>1</strong> high-intent category and alternative queries, competitors are named and beehiiv is not — direct, capturable demand going elsewhere.</li></ul>
+  </section>
+
+  <section class="sec">
+    <h2>2 &nbsp;Scorecard</h2>
+    
+    <div class="tiles">
+      <div class="tile"><div class="tile-num">79</div><div class="tile-cap">Overall visibility / 100</div></div>
+      <div class="tile"><div class="tile-num">46%</div><div class="tile-cap">Share of voice</div></div>
+      <div class="tile"><div class="tile-num">1</div><div class="tile-cap">Invisible high-intent answers</div></div>
+      <div class="tile "><div class="tile-num">0</div><div class="tile-cap">Misrepresentations</div></div>
+    </div>
+    <h3>Visibility by engine</h3>
+    <svg viewBox="0 0 680 192" role="img" aria-label="Per-engine visibility scores" class="chart">
+    <line x1="150" y1="14" x2="150" y2="158" class="grid"/><text x="150" y="178" class="axis" text-anchor="middle">0</text><line x1="267.5" y1="14" x2="267.5" y2="158" class="grid"/><text x="267.5" y="178" class="axis" text-anchor="middle">25</text><line x1="385" y1="14" x2="385" y2="158" class="grid"/><text x="385" y="178" class="axis" text-anchor="middle">50</text><line x1="502.5" y1="14" x2="502.5" y2="158" class="grid"/><text x="502.5" y="178" class="axis" text-anchor="middle">75</text><line x1="620" y1="14" x2="620" y2="158" class="grid"/><text x="620" y="178" class="axis" text-anchor="middle">100</text>
+      <text x="136" y="45" class="bar-label" text-anchor="end">ChatGPT</text>
+      <rect x="150" y="28" width="470" height="26" rx="4" class="bar-track"/>
+      <rect x="150" y="28" width="408.9" height="26" rx="4" class="bar-fill"/>
+      <text x="570.9" y="45" class="bar-value">87</text>
+      <text x="136" y="91" class="bar-label" text-anchor="end">Gemini</text>
+      <rect x="150" y="74" width="470" height="26" rx="4" class="bar-track"/>
+      <rect x="150" y="74" width="380.7" height="26" rx="4" class="bar-fill"/>
+      <text x="542.7" y="91" class="bar-value">81</text>
+      <text x="136" y="137" class="bar-label" text-anchor="end">Perplexity</text>
+      <rect x="150" y="120" width="470" height="26" rx="4" class="bar-track"/>
+      <rect x="150" y="120" width="329.0" height="26" rx="4" class="bar-fill"/>
+      <text x="491" y="137" class="bar-value">70</text>
+  </svg>
+    
+    <table class="tbl compact">
+      <thead><tr><th>Engine</th><th>Visibility</th><th>Mention rate</th><th>Avg. strength</th><th>#1 rate</th><th>Share of voice</th><th>Issues</th></tr></thead>
+      <tbody><tr>
+          <td>ChatGPT</td>
+          <td class="center strong">87</td>
+          <td class="center">100%</td>
+          <td class="center">2.1</td>
+          <td class="center">78%</td>
+          <td class="center">54%</td>
+          <td class="center ">0</td>
+        </tr><tr>
+          <td>Gemini</td>
+          <td class="center strong">81</td>
+          <td class="center">89%</td>
+          <td class="center">2.3</td>
+          <td class="center">67%</td>
+          <td class="center">44%</td>
+          <td class="center ">0</td>
+        </tr><tr>
+          <td>Perplexity</td>
+          <td class="center strong">70</td>
+          <td class="center">78%</td>
+          <td class="center">2.2</td>
+          <td class="center">44%</td>
+          <td class="center">42%</td>
+          <td class="center ">0</td>
+        </tr></tbody>
+    </table>
+    <h3>Share of voice</h3>
+    <p class="lede">How often beehiiv is named versus its tracked competitors, across every captured answer.</p>
+    <svg viewBox="0 0 620 292" role="img" aria-label="Share of voice" class="chart">
+      <text x="158" y="25" class="bar-label" text-anchor="end">beehiiv</text>
+      <rect x="170" y="10" width="380.0" height="22" rx="4" class="bar-fill"/>
+      <text x="560" y="25" class="bar-value">46%</text>
+      <text x="158" y="59" class="bar-label" text-anchor="end">Substack</text>
+      <rect x="170" y="44" width="199.0" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="379.0086206896551" y="59" class="bar-value">24%</text>
+      <text x="158" y="93" class="bar-label" text-anchor="end">Ghost</text>
+      <rect x="170" y="78" width="70.4" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="250.4310344827586" y="93" class="bar-value">9%</text>
+      <text x="158" y="127" class="bar-label" text-anchor="end">MailerLite</text>
+      <rect x="170" y="112" width="58.1" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="238.14655172413794" y="127" class="bar-value">7%</text>
+      <text x="158" y="161" class="bar-label" text-anchor="end">Kit</text>
+      <rect x="170" y="146" width="32.8" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="212.75862068965517" y="161" class="bar-value">4%</text>
+      <text x="158" y="195" class="bar-label" text-anchor="end">Mailchimp</text>
+      <rect x="170" y="180" width="32.8" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="212.75862068965517" y="195" class="bar-value">4%</text>
+      <text x="158" y="229" class="bar-label" text-anchor="end">Buttondown</text>
+      <rect x="170" y="214" width="19.7" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="199.6551724137931" y="229" class="bar-value">2%</text>
+      <text x="158" y="263" class="bar-label" text-anchor="end">Brevo</text>
+      <rect x="170" y="248" width="17.2" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="197.19827586206895" y="263" class="bar-value">2%</text></svg>
+  </section>
+
+  <section class="sec">
+    <h2>3 &nbsp;Where you're invisible</h2>
+    <p class="lede">High-intent category, comparison and alternative questions where AI engines recommend competitors and never mention beehiiv. This is demand being handed directly to rivals.</p>
+    <table class="tbl money">
+        <thead><tr><th>Query</th><th>Intent</th><th>Engine</th><th>Competitors named instead</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="q">How do I monetize a newsletter with ads and sponsorships?</td>
+            <td><span class="pill">use-case</span></td>
+            <td>Gemini</td>
+            <td class="comp">Kit</td>
+          </tr>
+        </tbody>
+      </table>
+  </section>
+
+  <section class="sec">
+    <h2>4 &nbsp;Misrepresentations</h2>
+    <p class="lede">Factual errors AI engines state about beehiiv, with the exact captured quote.</p>
+    <p class="empty">No factual misrepresentations were flagged by analysts.</p>
+  </section>
+
+  <section class="sec">
+    <h2>5 &nbsp;Recommendations</h2>
+    <p class="lede">Prioritized actions to close the gaps above.</p>
+    <ol class="recs"><li>Close the monetization-query gap — the one high-intent query where beehiiv is invisible on ALL three engines: &#39;How do I monetize a newsletter with ads and sponsorships?&#39; never mentions beehiiv, and no engine cites beehiiv&#39;s own Ad Network (Gemini instead surfaces Swapstack, Paved, and Kit&#39;s Sponsor Network). Publish a definitive, data-backed monetization guide anchored to this exact query phrasing, with Ad Network case studies and CPM benchmarks, and pitch it to the newsletter-industry roundups these engines cite.</li><li>Turn growth how-to queries into product surface: &#39;How to grow a newsletter from 0 to 10,000 subscribers&#39; yields only a passing tool mention on Gemini (&#39;platforms like Beehiiv or SparkLoop&#39;) and none on ChatGPT/Perplexity — even though Perplexity cites beehiiv&#39;s own growth blog as an authority without naming the product. Restructure top growth-blog posts so the referral program, Boosts, and recommendation network are named as the mechanism, not generic advice.</li><li>Defend the #1 category position with monitoring, not assumptions: beehiiv is the top or first-listed recommendation in 17 of 24 competitive query×engine cells (e.g. &#39;strongest option on the market&#39; — Gemini; &#39;my default recommendation&#39; — ChatGPT; &#39;strongest all-around pick&#39; — Perplexity). This dominance is sourced from third-party 2026 roundups; track those source articles and re-test quarterly, because a single influential roundup update can flip multiple engine answers at once.</li><li>Standardize pricing signals: engines quote the Scale plan variously at $39, $43, and $49/month depending on billing framing. Publish one canonical, crawler-friendly pricing page (FAQ/schema markup, explicit annual-vs-monthly figures) so AI answers stop presenting inconsistent prices next to competitor comparisons.</li><li>Exploit the 0%-take-rate narrative: all three engines independently repeat the &#39;0% vs Substack&#39;s 10%&#39; comparison and the ~$500/month break-even math as the deciding argument. This is beehiiv&#39;s strongest AI-visible message — reinforce it with an interactive break-even calculator page engines can cite, and extend the same math to Kit and Ghost comparisons where it is currently absent.</li></ol>
+  </section>
+
+  <section class="sec">
+    <h2>6 &nbsp;Query-level appendix</h2>
+    <p class="lede">Every query &times; engine, with mention, first-mention rank, recommendation strength (0&ndash;3), and a response excerpt.</p>
+    <div class="tbl-scroll">
+      <table class="tbl appendix">
+        <thead><tr><th>Engine</th><th>Query</th><th>Named</th><th>Rank</th><th>Str.</th><th>Response excerpt</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">What is beehiiv?<div class="q-meta">brand-direct</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">beehiiv is an all-in-one platform for creating, growing, and monetizing email newsletters. It combines newsletter publishing, a website builder, subscriber management, analytics, and revenue tools in one product. People often compare beehiiv to other newslette…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">How much does beehiiv cost? Is the free plan any good?<div class="q-meta">pricing</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">beehiiv has a surprisingly capable free plan. For many people starting a newsletter, it&#39;s good enough for months (or longer). beehiiv pricing (current) Plan — Price — Best for Launch (Free) — $0/month — New newsletters, creators testing an idea Scale — About $…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Best newsletter platform in 2026<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">The best newsletter platform in 2026 depends on your goal, but for most new newsletter businesses I&#39;d rank them like this: Rank — Platform — Best for — Why 1. beehiiv — Newsletter businesses, creators who want to grow — Strong growth tools, referrals, analytic…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">beehiiv vs Substack — which should I choose for a paid newsletter?<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">For a paid newsletter, I&#39;d usually choose beehiiv if you&#39;re trying to build a newsletter business, and Substack if you&#39;re primarily a writer who wants the simplest path to paid subscriptions. Quick recommendation: Choose beehiiv → if your goal is growth, ownin…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Best Substack alternatives<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">3</td>
+          <td class="excerpt">If you mean newsletter + publishing platforms like Substack, the best alternative depends on whether you care most about growth, ownership, monetization, or simplicity. Platform — Best for — Why choose it over Substack beehiiv — Growth-focused newsletters — St…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">How do I monetize a newsletter with ads and sponsorships?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">0</td>
+          <td class="excerpt">Monetizing a newsletter with ads and sponsorships usually comes down to building a valuable audience, packaging that audience for advertisers, and creating repeatable deals. Here&#39;s a practical roadmap. 1. Build an audience advertisers want Advertisers pay for…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Best email platform for creators who want to grow an audience<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">For creators, the &quot;best&quot; email platform depends on whether you prioritize newsletter growth, monetization, automation, or owning a simple audience relationship. Strong options: Platform — Best for — Why creators like it beehiiv — Newsletter-first creators — Bu…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">beehiiv vs Kit (ConvertKit) for a solo creator<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">For a solo creator, the choice between beehiiv and Kit mostly comes down to whether your newsletter is primarily a media business or an audience + relationship business. Quick verdict Choose beehiiv if you want to grow a newsletter like a publication: referral…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">How to grow a newsletter from 0 to 10,000 subscribers<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">0</td>
+          <td class="excerpt">Growing a newsletter from 0 to 10,000 subscribers is mostly a distribution problem, not a writing problem. The fastest-growing newsletters usually combine a clear niche, a repeatable acquisition channel, and strong referral/retention loops. Here is a practical…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Is beehiiv worth it for a serious paid newsletter business?<div class="q-meta">trust</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">Yes, beehiiv can be worth it for a serious paid newsletter business — but it depends on your business model, audience, and how much you need beyond publishing and subscriptions. Where beehiiv is strong 1. Built for newsletter growth beehiiv&#39;s biggest advantage…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Best newsletter platform for a media company running multiple newsletters<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">For a media company running multiple newsletters, the &quot;best&quot; platform depends less on sending email and more on publishing workflows, audience segmentation, monetization, analytics, ad operations, and managing multiple brands/products. Here are the strongest o…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">What&#39;s the cheapest way to start a professional email newsletter?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">2</td>
+          <td class="excerpt">If you&#39;re starting from zero, the cheapest way to run a professional email newsletter is usually to use a free newsletter platform until you have enough subscribers to justify paying. Here are the best low-cost options: Platform — Free plan — Best for — When y…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">What is beehiiv?<div class="q-meta">brand-direct</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">beehiiv is an all-in-one email newsletter and publishing platform designed specifically for growth and monetization. It was founded in 2021 by early employees of Morning Brew (including Tyler Denk, Benjamin Hargett, and Jacob Hurd) who wanted to take the custo…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">How much does beehiiv cost? Is the free plan any good?<div class="q-meta">pricing</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">beehiiv uses a tiered pricing model that scales based on both the features you need and the size of your subscriber list. Here is the breakdown of their 2026 pricing tiers (assuming month-to-month billing; annual billing offers a discount): Plan | Starting Pri…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Best newsletter platform in 2026<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">The &quot;best&quot; newsletter platform in 2026 isn&#39;t a single platform—it entirely depends on how you plan to make money and who your audience is. The market has fractured into highly specialized tools. If you are starting a newsletter this year, here is how the lands…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">beehiiv vs Substack — which should I choose for a paid newsletter?<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">The decision between beehiiv and Substack for a paid newsletter comes down to a classic tradeoff: Do you want a frictionless network that takes a cut of your revenue, or a dedicated business toolkit where you pay a flat monthly fee? If your only goal is to wri…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Best Substack alternatives<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">3</td>
+          <td class="excerpt">Substack made launching a newsletter incredibly easy, but as creators grow, they often outgrow it. The most common reasons for leaving are Substack&#39;s 10% cut of paid subscriptions, limited design control, and a lack of built-in marketing automations. If you ar…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">How do I monetize a newsletter with ads and sponsorships?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">Turning a newsletter into a revenue stream requires treating your audience&#39;s attention as a premium product. To successfully monetize through ads and sponsorships, you need to transition from simply writing content to actively managing a media property. Here i…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Best email platform for creators who want to grow an audience<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">Both platforms are excellent, but they are built for entirely different business models. The choice comes down to one question: Are you selling the newsletter itself, or are you using the newsletter to sell other things? If your newsletter is your primary prod…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">beehiiv vs Kit (ConvertKit) for a solo creator<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">If you are a creator in 2026, an &quot;email platform&quot; isn&#39;t just about sending weekly blasts anymore—it is the central operating system for your business. The best choice depends entirely on how you plan to monetize your audience. Here is how the top three platfor…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">How to grow a newsletter from 0 to 10,000 subscribers<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">1</td>
+          <td class="excerpt">Growing a newsletter from zero to 10,000 isn&#39;t a single strategy—it&#39;s three completely different games played in sequence. What gets you your first 100 subscribers will not get you to 10,000. Here is the breakdown of how to tackle each phase. Phase 1: 0 to 100…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Is beehiiv worth it for a serious paid newsletter business?<div class="q-meta">trust</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">Yes, if you are treating it as a serious business rather than a casual writing hobby, beehiiv is widely considered one of the best platforms available in 2026. For a paid newsletter, the decision usually comes down to beehiiv vs. Substack. While Substack is ea…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Best newsletter platform for a media company running multiple newsletters<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">For a media company running a portfolio of newsletters, your needs are drastically different from a solo creator. You need robust role permissions for your editorial team, multi-publication architecture to manage different brands under one roof, and cost predi…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">What&#39;s the cheapest way to start a professional email newsletter?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">2</td>
+          <td class="excerpt">The absolute cheapest way to start a professional email newsletter is to use a platform with a generous &quot;Free Forever&quot; tier. In 2026, the email marketing space is highly competitive, meaning you can get premium features—like landing pages, audience segmentatio…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">What is beehiiv?<div class="q-meta">brand-direct</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Beehiiv is an all-in-one newsletter platform for creators and publishers to build, grow, and monetize email newsletters. It typically includes tools for writing and sending newsletters, creating a simple website, managing subscribers, and earning money through…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">How much does beehiiv cost? Is the free plan any good?<div class="q-meta">pricing</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">beehiiv has a free Launch plan, and its paid plans start at around $39/month to $49/month depending on billing and subscriber tier details shown on pricing pages and third-party reviews. The free plan is good for testing the platform, but it comes with a 2,500…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Best newsletter platform in 2026<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">The best newsletter platform in 2026 depends on what you want to optimize for, but beehiiv is the strongest all-around pick for growth and monetization, while Substack is the easiest if you want to publish fast with built-in paid subscriptions. Recent 2026 rou…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">beehiiv vs Substack — which should I choose for a paid newsletter?<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">For a paid newsletter, I’d usually choose beehiiv if you care about keeping more of your revenue and having better growth tools. Substack is the better pick if you want the simplest setup, built-in community/discovery, and you’re happy with its 10% fee on paid…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Best Substack alternatives<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">3</td>
+          <td class="excerpt">Short answer: Top Substack alternatives are beehiiv, Ghost, Buttondown, Kit, MailerLite, Ghost, and Mighty Networks — each targets different needs: growth tools, full ownership, simplicity/privacy, built-in monetization, or community features. Platform summary…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">How do I monetize a newsletter with ads and sponsorships?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">You can monetize a newsletter with ads and sponsorships by selling inventory directly to brands, setting clear ad packages, and pricing based on audience fit rather than just subscriber count. Sponsorships are often the strongest starting point because they ar…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Best email platform for creators who want to grow an audience<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">3</td>
+          <td class="excerpt">Short answer: For creators focused on audience growth, Kit (ConvertKit/Kit-style creator platforms), beehiiv, and MailerLite are the best overall choices depending on your priorities — choose Kit for creator-first growth features, beehiiv for newsletter discov…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">beehiiv vs Kit (ConvertKit) for a solo creator<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">For a solo creator, Beehiiv is usually the better default if your main goal is to grow a newsletter audience and monetize it later with ads, referrals, or paid subscriptions. Choose Kit if your business depends on more advanced automations, segmentation, or se…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">How to grow a newsletter from 0 to 10,000 subscribers<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">Growing a newsletter from 0 to 10,000 subscribers is mostly about getting very specific, building one repeatable content format, and stacking distribution channels instead of relying on one “viral” hit. The fastest path is usually: niche focus, a strong lead m…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Is beehiiv worth it for a serious paid newsletter business?<div class="q-meta">trust</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">Yes—for a serious paid newsletter business, beehiiv is usually a strong choice because it’s built around publishing, paid subscriptions, referrals, and newsletter monetization rather than general-purpose email marketing. Where it shines It supports paid subscr…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Best newsletter platform for a media company running multiple newsletters<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">For a media company running multiple newsletters, Beehiiv is the strongest default choice because it is built around newsletter businesses, not just generic email marketing. It stands out for growth tools, monetization, audience analytics, and managing multipl…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">What&#39;s the cheapest way to start a professional email newsletter?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">3</td>
+          <td class="center">2</td>
+          <td class="excerpt">Short answer: Use a free or very low-cost email platform (Substack, Brevo, Beehiiv, MailerLite or Mailchimp free tiers), a simple signup form on a basic landing page or Linktree, and start by sending plain-text emails — this will get you a professional newslet…</td>
+        </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>7 &nbsp;Methodology &amp; limitations</h2>
+    <div class="method">
+      <p><strong>Engines tested.</strong> ChatGPT, Gemini, Perplexity.</p>
+      <p><strong>Query matrix.</strong> 12 queries spanning brand-direct, trust, category, comparison, alternative, use-case and pricing intents, reflecting how real buyers ask AI tools about Newsletter platforms for creators &amp; media.</p>
+      <p><strong>Capture.</strong> Each query was run in a fresh conversation with no prior context, and the full answer stored verbatim as the evidence layer of this report.</p>
+      <p><strong>Scoring.</strong> Visibility = 100 &times; (0.5 &times; mention rate + 0.3 &times; average recommendation strength / 3 + 0.2 &times; first-place rate), computed over competitive-intent queries. Brand-direct, trust and pricing queries almost always name the brand, so they are reported separately and excluded from the competitive score.</p>
+      <p><strong>Limitations.</strong> AI answers vary between runs and over time. These results are a representative sample captured on July 8, 2026, not a census. Treat scores as directional and re-audit periodically to track movement.</p>
+    </div>
+  </section>
+
+  <footer class="footnote">
+    <div class="brandmark small">Deep&nbsp;Mist&nbsp;AI</div>
+    <div>AI Visibility Audit &mdash; beehiiv &mdash; July 8, 2026</div>
+    <div class="muted">Prepared by Deep Mist AI. Findings are a sample of AI engine behavior and will vary between runs.</div>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ziina — AI Visibility Audit — Deep Mist AI</title>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1b201f; --muted:#5c6a68; --line:#e4e8e7;
+    --accent:#0f5c5a; --accent-2:#0f5c5a; --accent-soft:#e9f1f0; --card:#f7faf9;
+    --danger:#9a2f2f; --danger-soft:#f6ecec; --track:#eef2f1;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1413; --fg:#e7ecea; --muted:#98a7a4; --line:#28302e;
+      --accent:#4fb3ad; --accent-2:#63c7c0; --accent-soft:#16211f; --card:#161c1a;
+      --danger:#e59a9a; --danger-soft:#241716; --track:#1d2523;
+    }
+  }
+  *{box-sizing:border-box;}
+  body,.page{background:var(--bg); color:var(--fg);}
+  .page{max-width:900px; margin:0 auto; padding:0 40px 80px; font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .masthead{display:flex; align-items:baseline; justify-content:space-between; padding:26px 0 18px; border-bottom:2px solid var(--accent); margin-bottom:56px;}
+  .brandmark{font-family:var(--serif); font-weight:600; letter-spacing:.04em; color:var(--accent); font-size:20px;}
+  .brandmark.small{font-size:15px;}
+  .masthead-sub{font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted);}
+  h1,h2,h3{font-family:var(--serif); font-weight:600; color:var(--fg); line-height:1.2;}
+  h2{font-size:26px; margin:0 0 20px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+  h3{font-size:18px; margin:34px 0 12px; color:var(--accent);}
+  .cover{padding:20px 0 60px; text-align:left; border-bottom:1px solid var(--line); margin-bottom:60px;}
+  .cover-cat{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:14px;}
+  .cover-title{font-size:58px; margin:0 0 6px;}
+  .cover-date{color:var(--muted); font-size:15px; margin-bottom:40px;}
+  .cover-score{display:flex; align-items:baseline; gap:10px;}
+  .cover-score-num{font-family:var(--serif); font-size:112px; font-weight:600; color:var(--accent); line-height:.9;}
+  .cover-score-den{font-family:var(--serif); font-size:34px; color:var(--muted);}
+  .cover-label{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:10px 0 26px;}
+  .cover-verdict{font-family:var(--serif); font-size:24px; line-height:1.4; max-width:640px; margin:0;}
+  .sec{margin:0 0 60px;}
+  .lede{color:var(--muted); max-width:680px; margin:0 0 22px;}
+  .findings{list-style:none; padding:0; margin:0; counter-reset:f;}
+  .findings li{counter-increment:f; position:relative; padding:16px 0 16px 46px; border-bottom:1px solid var(--line); font-size:17px;}
+  .findings li:before{content:counter(f); position:absolute; left:0; top:14px; width:28px; height:28px; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-family:var(--serif); font-weight:600; display:flex; align-items:center; justify-content:center; font-size:14px;}
+  .tiles{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:6px 0 30px;}
+  .tile{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px 18px; border-top:3px solid var(--accent);}
+  .tile-danger{border-top-color:var(--danger);}
+  .tile-num{font-family:var(--serif); font-size:40px; font-weight:600; color:var(--fg); line-height:1;}
+  .tile-cap{font-size:12px; color:var(--muted); margin-top:8px; letter-spacing:.02em;}
+  .chart{width:100%; height:auto; margin:8px 0 24px; overflow:visible;}
+  .chart .grid{stroke:var(--line); stroke-width:1;}
+  .chart .axis{fill:var(--muted); font-size:12px; font-family:var(--sans);}
+  .chart .bar-label{fill:var(--fg); font-size:14px; font-family:var(--sans);}
+  .chart .bar-value{fill:var(--muted); font-size:13px; font-family:var(--sans); font-weight:600;}
+  .chart .bar-track{fill:var(--track);}
+  .chart .bar-fill{fill:var(--accent);}
+  .chart .bar-fill-muted{fill:var(--muted); opacity:.55;}
+  .tbl{width:100%; border-collapse:collapse; font-size:14.5px; margin:8px 0 10px;}
+  .tbl th{text-align:left; font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:2px solid var(--line);}
+  .tbl td{padding:12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .tbl .center{text-align:center;}
+  .tbl .strong{font-weight:700; color:var(--accent);}
+  .tbl.money td.q{font-weight:600; max-width:320px;}
+  .tbl.money td.comp{color:var(--danger); font-weight:500;}
+  .tbl.money tbody tr:hover{background:var(--accent-soft);}
+  .pill{display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:20px; padding:2px 10px; font-size:12px; font-weight:600;}
+  .q-meta{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-top:3px;}
+  .yes{color:var(--accent); font-weight:700;}
+  .no{color:var(--danger); font-weight:700;}
+  .danger{color:var(--danger); font-weight:700;}
+  .muted{color:var(--muted);}
+  .tbl-scroll{overflow-x:auto;}
+  .tbl.appendix{font-size:13.5px;}
+  .tbl.appendix td.excerpt{color:var(--muted); font-size:13px; max-width:360px;}
+  .mis{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--danger); border-radius:8px; padding:18px 20px; margin:0 0 16px;}
+  .mis-head{margin-bottom:8px;}
+  .engine-tag{display:inline-block; background:var(--accent); color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;}
+  .mis-q{font-weight:600; margin-left:8px;}
+  .mis-issue{color:var(--danger); font-weight:600; margin:4px 0 10px;}
+  .quote{margin:0; padding:12px 16px; border-left:2px solid var(--line); color:var(--muted); font-style:italic; background:var(--bg); font-size:13.5px;}
+  .recs{padding-left:0; margin:0; list-style:none; counter-reset:r;}
+  .recs li{counter-increment:r; position:relative; padding:14px 0 14px 44px; border-bottom:1px solid var(--line);}
+  .recs li:before{content:counter(r); position:absolute; left:0; top:12px; width:28px; height:28px; border-radius:6px; background:var(--accent); color:#fff; font-family:var(--serif); font-weight:600; display:flex; align-items:center; justify-content:center; font-size:14px;}
+  .method p{margin:0 0 12px; color:var(--fg);}
+  .method strong{color:var(--accent);}
+  .empty{color:var(--muted); font-style:italic; padding:16px 0;}
+  .footnote{margin-top:70px; padding-top:22px; border-top:2px solid var(--accent); font-size:12.5px; color:var(--muted); display:flex; flex-direction:column; gap:4px;}
+  .footnote .brandmark{margin-bottom:2px;}
+  @media (max-width:640px){ .page{padding:0 18px 60px;} .tiles{grid-template-columns:repeat(2,1fr);} .cover-title{font-size:40px;} .cover-score-num{font-size:80px;} }
+  @media print{ .page{max-width:none; padding:0;} .sec{page-break-inside:avoid;} .tbl.money tbody tr:hover{background:none;} }
+</style>
+<div class="page">
+  <header class="masthead">
+    <div class="brandmark">Deep&nbsp;Mist&nbsp;AI</div>
+    <div class="masthead-sub">AI Visibility Audit</div>
+  </header>
+
+  <section class="cover">
+    <div class="cover-cat">UAE payment apps &amp; payment links for SMBs</div>
+    <h1 class="cover-title">Ziina</h1>
+    <div class="cover-date">July 8, 2026</div>
+    <div class="cover-score">
+      <div class="cover-score-num">43</div>
+      <div class="cover-score-den">/ 100</div>
+    </div>
+    <div class="cover-label">Overall AI visibility score</div>
+    <p class="cover-verdict">Surfacing rarely and being out-positioned by competitors across AI answers.</p>
+  </section>
+
+  <section class="sec">
+    <h2>1 &nbsp;Executive summary</h2>
+    <ul class="findings"><li>Across 3 AI engines, Ziina scores <strong>43/100</strong> on competitive visibility — surfacing rarely and being out-positioned by competitors across ai answers.</li><li>Strongest on <strong>Gemini</strong> (73/100); weakest on <strong>Perplexity</strong> (27/100).</li><li>Overall share of voice is <strong>32%</strong>, while <strong>Telr</strong> dominates the conversation.</li><li>In <strong>10</strong> high-intent category and alternative queries, competitors are named and Ziina is not — direct, capturable demand going elsewhere.</li><li>Analysts flagged <strong>1</strong> factual misrepresentation of Ziina in AI answers — actively misleading prospective customers.</li></ul>
+  </section>
+
+  <section class="sec">
+    <h2>2 &nbsp;Scorecard</h2>
+    
+    <div class="tiles">
+      <div class="tile"><div class="tile-num">43</div><div class="tile-cap">Overall visibility / 100</div></div>
+      <div class="tile"><div class="tile-num">32%</div><div class="tile-cap">Share of voice</div></div>
+      <div class="tile"><div class="tile-num">10</div><div class="tile-cap">Invisible high-intent answers</div></div>
+      <div class="tile tile-danger"><div class="tile-num">1</div><div class="tile-cap">Misrepresentations</div></div>
+    </div>
+    <h3>Visibility by engine</h3>
+    <svg viewBox="0 0 680 192" role="img" aria-label="Per-engine visibility scores" class="chart">
+    <line x1="150" y1="14" x2="150" y2="158" class="grid"/><text x="150" y="178" class="axis" text-anchor="middle">0</text><line x1="267.5" y1="14" x2="267.5" y2="158" class="grid"/><text x="267.5" y="178" class="axis" text-anchor="middle">25</text><line x1="385" y1="14" x2="385" y2="158" class="grid"/><text x="385" y="178" class="axis" text-anchor="middle">50</text><line x1="502.5" y1="14" x2="502.5" y2="158" class="grid"/><text x="502.5" y="178" class="axis" text-anchor="middle">75</text><line x1="620" y1="14" x2="620" y2="158" class="grid"/><text x="620" y="178" class="axis" text-anchor="middle">100</text>
+      <text x="136" y="45" class="bar-label" text-anchor="end">ChatGPT</text>
+      <rect x="150" y="28" width="470" height="26" rx="4" class="bar-track"/>
+      <rect x="150" y="28" width="136.3" height="26" rx="4" class="bar-fill"/>
+      <text x="298.29999999999995" y="45" class="bar-value">29</text>
+      <text x="136" y="91" class="bar-label" text-anchor="end">Gemini</text>
+      <rect x="150" y="74" width="470" height="26" rx="4" class="bar-track"/>
+      <rect x="150" y="74" width="343.1" height="26" rx="4" class="bar-fill"/>
+      <text x="505.09999999999997" y="91" class="bar-value">73</text>
+      <text x="136" y="137" class="bar-label" text-anchor="end">Perplexity</text>
+      <rect x="150" y="120" width="470" height="26" rx="4" class="bar-track"/>
+      <rect x="150" y="120" width="126.9" height="26" rx="4" class="bar-fill"/>
+      <text x="288.9" y="137" class="bar-value">27</text>
+  </svg>
+    
+    <table class="tbl compact">
+      <thead><tr><th>Engine</th><th>Visibility</th><th>Mention rate</th><th>Avg. strength</th><th>#1 rate</th><th>Share of voice</th><th>Issues</th></tr></thead>
+      <tbody><tr>
+          <td>ChatGPT</td>
+          <td class="center strong">29</td>
+          <td class="center">33%</td>
+          <td class="center">0.8</td>
+          <td class="center">22%</td>
+          <td class="center">29%</td>
+          <td class="center ">0</td>
+        </tr><tr>
+          <td>Gemini</td>
+          <td class="center strong">73</td>
+          <td class="center">89%</td>
+          <td class="center">2.2</td>
+          <td class="center">33%</td>
+          <td class="center">41%</td>
+          <td class="center danger">1</td>
+        </tr><tr>
+          <td>Perplexity</td>
+          <td class="center strong">27</td>
+          <td class="center">33%</td>
+          <td class="center">0.8</td>
+          <td class="center">11%</td>
+          <td class="center">26%</td>
+          <td class="center ">0</td>
+        </tr></tbody>
+    </table>
+    <h3>Share of voice</h3>
+    <p class="lede">How often Ziina is named versus its tracked competitors, across every captured answer.</p>
+    <svg viewBox="0 0 620 292" role="img" aria-label="Share of voice" class="chart">
+      <text x="158" y="25" class="bar-label" text-anchor="end">Ziina</text>
+      <rect x="170" y="10" width="380.0" height="22" rx="4" class="bar-fill"/>
+      <text x="560" y="25" class="bar-value">32%</text>
+      <text x="158" y="59" class="bar-label" text-anchor="end">Telr</text>
+      <rect x="170" y="44" width="140.4" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="320.4347826086956" y="59" class="bar-value">12%</text>
+      <text x="158" y="93" class="bar-label" text-anchor="end">Stripe</text>
+      <rect x="170" y="78" width="133.4" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="313.35403726708074" y="93" class="bar-value">11%</text>
+      <text x="158" y="127" class="bar-label" text-anchor="end">PayTabs</text>
+      <rect x="170" y="112" width="106.2" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="286.2111801242236" y="127" class="bar-value">9%</text>
+      <text x="158" y="161" class="bar-label" text-anchor="end">Mamo</text>
+      <rect x="170" y="146" width="102.7" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="282.67080745341616" y="161" class="bar-value">9%</text>
+      <text x="158" y="195" class="bar-label" text-anchor="end">Checkout.com</text>
+      <rect x="170" y="180" width="68.4" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="248.4472049689441" y="195" class="bar-value">6%</text>
+      <text x="158" y="229" class="bar-label" text-anchor="end">Tap Payments</text>
+      <rect x="170" y="214" width="60.2" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="240.1863354037267" y="229" class="bar-value">5%</text>
+      <text x="158" y="263" class="bar-label" text-anchor="end">PayPal</text>
+      <rect x="170" y="248" width="49.6" height="22" rx="4" class="bar-fill-muted"/>
+      <text x="229.56521739130434" y="263" class="bar-value">4%</text></svg>
+  </section>
+
+  <section class="sec">
+    <h2>3 &nbsp;Where you're invisible</h2>
+    <p class="lede">High-intent category, comparison and alternative questions where AI engines recommend competitors and never mention Ziina. This is demand being handed directly to rivals.</p>
+    <table class="tbl money">
+        <thead><tr><th>Query</th><th>Intent</th><th>Engine</th><th>Competitors named instead</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="q">Best payment apps in the UAE in 2026</td>
+            <td><span class="pill">category</span></td>
+            <td>Perplexity</td>
+            <td class="comp">Payit, Careem Pay</td>
+          </tr>
+          <tr>
+            <td class="q">How can a small business in Dubai accept card payments online without a POS terminal?</td>
+            <td><span class="pill">use-case</span></td>
+            <td>ChatGPT</td>
+            <td class="comp">Stripe, Telr, PayTabs, Checkout.com, Network International</td>
+          </tr>
+          <tr>
+            <td class="q">How can a small business in Dubai accept card payments online without a POS terminal?</td>
+            <td><span class="pill">use-case</span></td>
+            <td>Perplexity</td>
+            <td class="comp">PayPal, Telr, PayTabs</td>
+          </tr>
+          <tr>
+            <td class="q">Best payment gateway for small businesses in the UAE</td>
+            <td><span class="pill">category</span></td>
+            <td>ChatGPT</td>
+            <td class="comp">Stripe, Telr, PayTabs, Checkout.com</td>
+          </tr>
+          <tr>
+            <td class="q">Best payment gateway for small businesses in the UAE</td>
+            <td><span class="pill">category</span></td>
+            <td>Gemini</td>
+            <td class="comp">Mamo, Stripe, Telr, Tap Payments, Wio, Network International</td>
+          </tr>
+          <tr>
+            <td class="q">Best alternatives to PayPal in the UAE</td>
+            <td><span class="pill">alternative</span></td>
+            <td>ChatGPT</td>
+            <td class="comp">PayPal, Stripe, Telr, PayTabs, Checkout.com</td>
+          </tr>
+          <tr>
+            <td class="q">Best alternatives to PayPal in the UAE</td>
+            <td><span class="pill">alternative</span></td>
+            <td>Perplexity</td>
+            <td class="comp">PayPal, Stripe, Telr, PayTabs</td>
+          </tr>
+          <tr>
+            <td class="q">How do I create a payment link to charge a customer in the UAE?</td>
+            <td><span class="pill">use-case</span></td>
+            <td>ChatGPT</td>
+            <td class="comp">PayPal, Stripe, Telr, PayTabs, Checkout.com, Network International</td>
+          </tr>
+          <tr>
+            <td class="q">How do I create a payment link to charge a customer in the UAE?</td>
+            <td><span class="pill">use-case</span></td>
+            <td>Perplexity</td>
+            <td class="comp">Mamo</td>
+          </tr>
+          <tr>
+            <td class="q">What&#39;s the easiest app to split a restaurant bill with friends in Dubai?</td>
+            <td><span class="pill">use-case</span></td>
+            <td>Perplexity</td>
+            <td class="comp">Payit</td>
+          </tr>
+        </tbody>
+      </table>
+  </section>
+
+  <section class="sec">
+    <h2>4 &nbsp;Misrepresentations</h2>
+    <p class="lede">Factual errors AI engines state about Ziina, with the exact captured quote.</p>
+    
+        <div class="mis">
+          <div class="mis-head"><span class="engine-tag">Gemini</span> <span class="mis-q">How can a small business in Dubai accept card payments online without a POS terminal?</span></div>
+          <div class="mis-issue">States Ziina&#39;s fee as ~2.9% + AED 1 for receiving payments — Ziina&#39;s published standard receiving rate is 2.6% + AED 1 (2.9% + AED 1 applies to sending via debit/credit card, per ziina.com pricing)</div>
+          <blockquote class="quote">Accepting card payments online without physical Point of Sale (POS) hardware is easier than ever in Dubai. Whether you run an e-commerce site, sell through Instagram, or offer B2B consulting, you can handle everything digitally using payment gateways and payment links. Here is how you can set it up, the best platforms for small businesses in the UAE, and wha…</blockquote>
+        </div>
+  </section>
+
+  <section class="sec">
+    <h2>5 &nbsp;Recommendations</h2>
+    <p class="lede">Prioritized actions to close the gaps above.</p>
+    <ol class="recs"><li>Fix the payment-link intent gap first — it is the highest-revenue query and Ziina&#39;s flagship product, yet &#39;How do I create a payment link to charge a customer in the UAE?&#39; never mentions Ziina on ChatGPT or Perplexity (they surface Stripe, PayTabs, Telr, Network International, Paymob, noon payments, Geidea, Mamo, Foloosi, Hubpay instead; only Gemini lists Ziina). Publish a definitive how-to guide plus a provider comparison on ziina.com targeted at this exact phrasing, and get placed in the third-party UAE fintech roundups these engines cite.</li><li>Reclaim consumer P2P and bill-splitting queries: &#39;best way to send money to friends in the UAE&#39; and &#39;split a restaurant bill in Dubai&#39; produce zero Ziina mentions on ChatGPT and Perplexity (Splitwise, Tricount, Wise, Western Union win), while Gemini calls Ziina &#39;the Venmo of the UAE&#39; and lists it first. The content that convinced Gemini exists — replicate that placement for the sources ChatGPT/Perplexity cite (app roundups, expat guides).</li><li>Close the SME-acceptance gap: &#39;accept card payments online without a POS terminal&#39; and &#39;best payment gateway for small businesses in the UAE&#39; are invisible on ChatGPT (both queries) and mixed elsewhere, with PayTabs/Telr/Stripe/Checkout.com dominating via &#39;best payment gateway UAE&#39; listicles. Target inclusion in those specific listicles and ship per-use-case landing pages (freelancer, salon, Instagram seller) matching the query language.</li><li>Correct the fee misquote at the source: Gemini states Ziina&#39;s receiving fee as ~2.9% + AED 1; the published rate is 2.6% + AED 1 (2.9% applies to card-funded sends). Add machine-readable pricing markup (schema.org FAQ) and a plain-language fee table so engines stop conflating the two rates.</li><li>Defend the strongholds: Ziina is first-listed or top-pick for &#39;Stripe alternatives for UAE startups&#39; on all three engines and features in &#39;best payment apps UAE&#39; on ChatGPT and Gemini (absent on Perplexity, which pulled a 2026 wallet roundup that omits Ziina). Keep the startup-positioning content fresh, and pitch the specific wallet roundups Perplexity cites for the missing placement.</li><li>Institute quarterly AI-visibility monitoring: answers differed materially across engines and between personalized and clean sessions during this audit — a one-time fix without tracking will silently decay as engines re-source their answers.</li></ol>
+  </section>
+
+  <section class="sec">
+    <h2>6 &nbsp;Query-level appendix</h2>
+    <p class="lede">Every query &times; engine, with mention, first-mention rank, recommendation strength (0&ndash;3), and a response excerpt.</p>
+    <div class="tbl-scroll">
+      <table class="tbl appendix">
+        <thead><tr><th>Engine</th><th>Query</th><th>Named</th><th>Rank</th><th>Str.</th><th>Response excerpt</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">What is Ziina?<div class="q-meta">brand-direct</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Ziina is a UAE-based financial technology (fintech) company that provides a digital payments platform for both individuals and businesses. Founded in 2020 and headquartered in Dubai, its mission is to make sending, receiving, and managing money faster and simp…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Is Ziina safe and legit to use in the UAE?<div class="q-meta">trust</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Yes. Based on the available evidence, Ziina appears to be a legitimate and regulated fintech company in the UAE, not a scam. However, like many financial platforms, it has received some user complaints—primarily around account verification and customer support…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">What&#39;s the best way to send money to friends in the UAE?<div class="q-meta">category</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">The best option depends on whether your friend is already in the UAE, where your money is now, and whether you want the fastest, cheapest, or simplest method. Here are some common choices: Bank transfer: If both of you have bank accounts, a local transfer with…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Best payment apps in the UAE in 2026<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">If you&#39;re looking for the best consumer payment apps in the UAE in 2026, these are among the strongest options based on acceptance, features, and ease of use: App — Best for — Key features Aani — Instant bank-to-bank transfers — Real-time transfers using phone…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">How can a small business in Dubai accept card payments online without a POS terminal?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">A small business in Dubai can accept online card payments without owning a physical POS terminal by using a payment gateway or a payment link service. Customers pay through a secure web page instead of tapping or inserting a card into a device. Here are the mo…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Best payment gateway for small businesses in the UAE<div class="q-meta">category</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">For most small businesses in the UAE, the best payment gateway depends on your business model, technical needs, and expected transaction volume. Here&#39;s a practical comparison: Payment Gateway — Best For — Strengths — Considerations PayTabs — Most SMEs — Strong…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Ziina vs Mamo — which is better for a UAE small business?<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">For most UAE small businesses, both Ziina and Mamo are strong local payment platforms, but they emphasize different priorities. Here&#39;s a practical comparison: Category — Ziina — Mamo Best for — Freelancers, service businesses, small retailers, startups — Growi…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Best alternatives to PayPal in the UAE<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">The best alternative depends on what you&#39;re using PayPal for. In the UAE, these are among the strongest options: Platform — Best for — Key advantages — Things to consider Wise — International transfers and freelancers — Low FX fees, transparent exchange rates,…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">How do I create a payment link to charge a customer in the UAE?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">If you want to charge a customer in the UAE using a payment link, the process is generally the same across most payment providers: Sign in to your payment provider&#39;s dashboard. Create a new Payment Link (sometimes called a payment request or invoice). Enter: T…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">What are Ziina&#39;s fees for business payments?<div class="q-meta">pricing</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">For Ziina Business payments, the fees are currently: Payment type — Fee Receiving payments via Ziina Links, QR codes, NFC, Tap to Pay, website payments, or Ziina Balance — 2.6% + 1 AED per transaction Receiving payments using an international card or in a non-…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">Stripe alternatives for UAE startups<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">6</td>
+          <td class="center">2</td>
+          <td class="excerpt">For a UAE startup, the best Stripe alternatives depend on whether you care most about developer experience, UAE payment methods, lower fees, subscriptions, or international customers. Provider — Best for — Strengths — Watch-outs Checkout.com — High-growth star…</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td class="q">What&#39;s the easiest app to split a restaurant bill with friends in Dubai?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">For a restaurant bill with friends in Dubai, the easiest options are usually: Splitwise — best overall for friend groups Add the restaurant bill, choose who shared what, and it calculates who owes whom. Good if your group regularly eats out, travels, or shares…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">What is Ziina?<div class="q-meta">brand-direct</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Ziina is a Dubai-based financial technology (fintech) company that provides a digital wallet and payment platform for both consumers and businesses in the UAE. Founded in 2020, it originally launched as the UAE&#39;s first social peer-to-peer (P2P) payment app—ess…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Is Ziina safe and legit to use in the UAE?<div class="q-meta">trust</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Yes, Ziina is completely legitimate and safe to use in the UAE. Since its launch in 2020, it has grown into one of the most established homegrown fintech platforms in the region for both personal and business payments. Here is a breakdown of their regulatory s…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">What&#39;s the best way to send money to friends in the UAE?<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">2</td>
+          <td class="excerpt">The &quot;best&quot; way to send money to friends in the UAE depends entirely on whether you are sending it locally from within the UAE or internationally from another country. Here is the breakdown of the most efficient options for both: 1. Sending Locally (Within the…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Best payment apps in the UAE in 2026<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">3</td>
+          <td class="center">2</td>
+          <td class="excerpt">The UAE&#39;s push toward a cashless economy has rapidly accelerated by 2026. The landscape has shifted from basic mobile banking to all-in-one financial &quot;super apps&quot; and specialized wallets that integrate directly into how people chat, commute, and shop. Here are…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">How can a small business in Dubai accept card payments online without a POS terminal?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">Accepting card payments online without physical Point of Sale (POS) hardware is easier than ever in Dubai. Whether you run an e-commerce site, sell through Instagram, or offer B2B consulting, you can handle everything digitally using payment gateways and payme…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Best payment gateway for small businesses in the UAE<div class="q-meta">category</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">Choosing the best payment gateway in the UAE comes down to your business model, customer base, and transaction volume. While established banks historically dominated the region, 2026 offers highly competitive, tech-forward options for small businesses that eli…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Ziina vs Mamo — which is better for a UAE small business?<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Both Ziina and Mamo Business are excellent, Central Bank of the UAE-licensed financial platforms, but they serve different stages of a small business&#39;s lifecycle. Choosing between them comes down to whether you primarily need a quick way to collect payments (Z…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Best alternatives to PayPal in the UAE<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">3</td>
+          <td class="excerpt">Because PayPal serves several different purposes — from sending money to a friend to receiving international freelance payments to checking out on an e-commerce store — the &quot;best&quot; alternative depends entirely on what you actually need it to do. Here is how the…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">How do I create a payment link to charge a customer in the UAE?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">2</td>
+          <td class="excerpt">Creating a payment link in the UAE is the fastest way to accept card or digital wallet payments without needing a full e-commerce website. Because of strict local financial regulations, you cannot just generate a link through your standard corporate bank accou…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">What are Ziina&#39;s fees for business payments?<div class="q-meta">pricing</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Ziina&#39;s fee structure for business accounts operates on a pay-as-you-go model with no setup or subscription fees. Here is the breakdown of their business payment fees: Receiving Money Standard Rate: 2.6% + 1 AED per transaction for payments received via Ziina…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">Stripe alternatives for UAE startups<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">2</td>
+          <td class="center">3</td>
+          <td class="excerpt">While Stripe is fully operational in the UAE and remains a powerhouse, many startups look for alternatives to get faster settlements, easier onboarding, better local payment methods (like Tabby or Tamara), or specialized B2B features. Here are the best payment…</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td class="q">What&#39;s the easiest app to split a restaurant bill with friends in Dubai?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">3</td>
+          <td class="excerpt">Splitting a restaurant bill in Dubai usually requires solving two different problems: figuring out the math (if everyone ordered differently), and actually transferring the money without the friction of copying 23-digit IBANs. Here are the easiest apps for bot…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">What is Ziina?<div class="q-meta">brand-direct</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Ziina is a UAE-based financial app and payments platform that lets individuals and businesses send, receive, and manage money, including cashless payments in person and online. It is positioned as a fast, secure way to pay and get paid, and it also supports bu…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Is Ziina safe and legit to use in the UAE?<div class="q-meta">trust</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Yes — Ziina appears to be a legitimate payment app for UAE residents, and its own published help pages say it is licensed and regulated by the Central Bank of the UAE and uses security measures like encryption, two-factor authentication, biometric protection,…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">What&#39;s the best way to send money to friends in the UAE?<div class="q-meta">category</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">The best option usually depends on where you’re sending from, but for most people the cheapest and easiest route is a regulated money transfer app or service with transparent fees and a good exchange rate. If your friend is in the UAE, look for a provider that…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Best payment apps in the UAE in 2026<div class="q-meta">category</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">Here are some of the best payment apps commonly used in the UAE in 2026, with a quick note on what each is best for. PayIt (FAB-backed): Strong for government and utility payments, highly trusted due to backing by a major bank [source material reviewed in 2026…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">How can a small business in Dubai accept card payments online without a POS terminal?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">You can accept card payments online in Dubai without a physical POS terminal by using online payment gateways, virtual terminals, and payment links. Here’s a practical path you can follow. Key options Online payment gateway (merchant account + gateway integrat…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Best payment gateway for small businesses in the UAE<div class="q-meta">category</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">4</td>
+          <td class="center">2</td>
+          <td class="excerpt">Short answer: The best fit depends on your business needs (local support, API needs, pricing, and whether you prioritize Arabic checkout or global card methods). Common strong options for UAE SMEs include Telr, Tap Payments, PayTabs, and Ziina, with Stripe and…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Ziina vs Mamo — which is better for a UAE small business?<div class="q-meta">comparison</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Ziina and Mamo both target UAE SMEs, but which is better depends on your needs (payments focus, features, and cost). Here’s a practical quick guide to help you decide. Direct answer If you mainly need simple, fast payment links, consumer-to-business payouts, a…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Best alternatives to PayPal in the UAE<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">For most people in the UAE, the best PayPal alternatives are Wise, PayTabs, Telr, Stripe via supported setups, and local bank transfer or card-payment solutions depending on whether you’re sending money, receiving freelance payments, or running an online store…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">How do I create a payment link to charge a customer in the UAE?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">To charge a customer in the UAE with a payment link, you usually need a UAE-licensed payment provider or gateway, then create a one-time link in their dashboard, enter the customer and amount, and share the link by WhatsApp, email, SMS, or social media. Most p…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">What are Ziina&#39;s fees for business payments?<div class="q-meta">pricing</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">1</td>
+          <td class="center">2</td>
+          <td class="excerpt">Ziina’s business payment fee is typically 2.6% + AED 1 per transaction for receiving payments through links, QR codes, NFC, Tap to Pay, or a website. If the payment comes from an international card or in a non-AED currency, there is an additional 1.5% fee, and…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">Stripe alternatives for UAE startups<div class="q-meta">alternative</div></td>
+          <td class="center"><span class="yes">✓</span></td>
+          <td class="center">4</td>
+          <td class="center">3</td>
+          <td class="excerpt">For most UAE startups, the strongest Stripe alternatives are Telr, PayTabs, Ziina, Network International, and Checkout.com. The best choice depends on whether you need local UAE acceptance, global cards, subscriptions, or higher-scale enterprise processing. Be…</td>
+        </tr>
+        <tr>
+          <td>Perplexity</td>
+          <td class="q">What&#39;s the easiest app to split a restaurant bill with friends in Dubai?<div class="q-meta">use-case</div></td>
+          <td class="center"><span class="no">✗</span></td>
+          <td class="center">—</td>
+          <td class="center">0</td>
+          <td class="excerpt">For most people in Dubai, Splitwise is the easiest all-around choice for splitting a restaurant bill with friends. It’s widely used, simple to set up, and handles uneven splits, shared items, and tracking who owes whom; it’s also specifically recommended in re…</td>
+        </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>7 &nbsp;Methodology &amp; limitations</h2>
+    <div class="method">
+      <p><strong>Engines tested.</strong> ChatGPT, Gemini, Perplexity.</p>
+      <p><strong>Query matrix.</strong> 12 queries spanning brand-direct, trust, category, comparison, alternative, use-case and pricing intents, reflecting how real buyers ask AI tools about UAE payment apps &amp; payment links for SMBs.</p>
+      <p><strong>Capture.</strong> Each query was run in a fresh conversation with no prior context, and the full answer stored verbatim as the evidence layer of this report.</p>
+      <p><strong>Scoring.</strong> Visibility = 100 &times; (0.5 &times; mention rate + 0.3 &times; average recommendation strength / 3 + 0.2 &times; first-place rate), computed over competitive-intent queries. Brand-direct, trust and pricing queries almost always name the brand, so they are reported separately and excluded from the competitive score.</p>
+      <p><strong>Limitations.</strong> AI answers vary between runs and over time. These results are a representative sample captured on July 8, 2026, not a census. Treat scores as directional and re-audit periodically to track movement.</p>
+    </div>
+  </section>
+
+  <footer class="footnote">
+    <div class="brandmark small">Deep&nbsp;Mist&nbsp;AI</div>
+    <div>AI Visibility Audit &mdash; Ziina &mdash; July 8, 2026</div>
+    <div class="muted">Prepared by Deep Mist AI. Findings are a sample of AI engine behavior and will vary between runs.</div>
+  </footer>
+</div>
+</body>
+</html>
