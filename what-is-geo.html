@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is GEO (Generative Engine Optimization)? | WhoCitesYou</title>
+<meta name="description" content="GEO (generative engine optimization) is the practice of getting your brand cited in AI answers from ChatGPT, Gemini and Perplexity. Here's what GEO / AEO is, why it exists, how it differs from SEO, and how to measure it.">
+<link rel="canonical" href="https://whocitesyou.com/what-is-geo.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What is GEO (Generative Engine Optimization)?">
+<meta property="og:description" content="Buyers now ask ChatGPT, Gemini and Perplexity for recommendations, and the shortlist forms inside the answer. GEO is how you get cited there. What it is, why it exists, and how it differs from SEO.">
+<meta property="og:url" content="https://whocitesyou.com/what-is-geo.html">
+<meta property="og:image" content="https://whocitesyou.com/assets/banner.png">
+<meta property="og:site_name" content="WhoCitesYou">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is GEO (Generative Engine Optimization)?">
+<meta name="twitter:description" content="How buyers pick brands has moved inside AI answers. GEO is how you get cited there. What it is, why it exists, and how it differs from SEO.">
+<meta name="twitter:image" content="https://whocitesyou.com/assets/banner.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231A1C22'/%3E%3Crect x='18' y='54' width='64' height='16' rx='3' fill='%23FFDE59'/%3E%3Ctext x='50' y='46' font-family='Georgia,serif' font-size='52' font-weight='700' fill='%23F4F5F2' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#1A1C22;
+    --ink-soft:#565A63;
+    --ink-faint:#8A8D94;
+    --paper:#F4F5F2;
+    --surface:#FFFFFF;
+    --line:#E4E5E1;
+    --line-strong:#D3D4CF;
+    --hl:#FFDE59;
+    --hl-deep:#E8B800;
+    --alert:#CE3A2C;
+    --alert-soft:#FBEAE7;
+    --good:#1F7A5C;
+    --shadow:0 1px 2px rgba(20,22,26,.05), 0 8px 30px rgba(20,22,26,.06);
+    --shadow-lg:0 2px 6px rgba(20,22,26,.06), 0 20px 60px rgba(20,22,26,.10);
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Times New Roman",Times,serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --wrap:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  a{color:inherit;}
+  img{max-width:100%;}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px;}
+  .narrow{max-width:760px;}
+
+  /* highlighter mark */
+  .mark{position:relative;white-space:nowrap;z-index:0;}
+  .mark::after{
+    content:"";position:absolute;left:-.06em;right:-.06em;bottom:.06em;height:.44em;
+    background:var(--hl);z-index:-1;border-radius:2px;
+  }
+
+  /* nav */
+  header.nav{
+    position:sticky;top:0;z-index:50;background:rgba(244,245,242,.82);
+    backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line);
+  }
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{display:flex;align-items:baseline;gap:0;font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;}
+  .brand .who{color:var(--ink);}
+  .brand .cites{position:relative;padding:0 1px;}
+  .brand .cites::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:7px;background:var(--hl);z-index:-1;}
+  .brand .you{color:var(--ink);}
+  .nav-links{display:flex;align-items:center;gap:28px;}
+  .nav-links a{font-size:15px;text-decoration:none;color:var(--ink-soft);font-weight:500;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a.here{color:var(--ink);}
+  .nav-cta{display:none;}
+  @media(min-width:780px){.nav-cta{display:inline-flex;}}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);
+    font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;
+    border-radius:10px;padding:11px 18px;border:1px solid transparent;transition:transform .12s ease,box-shadow .2s ease,background .2s ease;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(20,22,26,.22);}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong);}
+  .btn-ghost:hover{background:#fff;border-color:var(--ink);}
+  .btn-lg{padding:15px 26px;font-size:17px;border-radius:12px;}
+
+  /* breadcrumb */
+  .crumbs{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:26px;}
+  .crumbs a{color:var(--ink-soft);text-decoration:none;}
+  .crumbs a:hover{color:var(--ink);}
+
+  /* hero */
+  .hero{padding:26px 0 30px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12.5px;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);
+    border:1px solid var(--line-strong);background:#fff;border-radius:999px;padding:6px 13px;margin-bottom:24px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px rgba(31,122,92,.15);}
+  h1.hero-h{
+    font-size:clamp(34px,5vw,58px);line-height:1.04;letter-spacing:-.032em;font-weight:800;
+    margin:0 0 20px;max-width:20ch;
+  }
+  .hero-sub{font-size:clamp(17px,2.1vw,21px);color:var(--ink-soft);max-width:60ch;margin:0 0 6px;line-height:1.55;}
+
+  /* section scaffolding */
+  section{padding:60px 0;}
+  .sec-label{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--hl-deep);font-weight:600;margin-bottom:14px;}
+  h2.sec-h{font-size:clamp(26px,3.6vw,38px);line-height:1.1;letter-spacing:-.028em;font-weight:800;margin:0 0 16px;max-width:22ch;}
+  .sec-lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 8px;line-height:1.55;}
+
+  /* prose */
+  .prose p{font-size:17px;line-height:1.72;color:var(--ink-soft);margin:0 0 18px;max-width:66ch;}
+  .prose p:last-child{margin-bottom:0;}
+  .prose p b{color:var(--ink);}
+  .prose h3{font-size:20px;letter-spacing:-.015em;margin:30px 0 10px;color:var(--ink);}
+  .prose a{color:var(--ink);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--hl-deep);}
+
+  /* dark band */
+  .band{background:var(--ink);color:#EDEEEA;}
+  .band .sec-label{color:var(--hl);}
+  .band h2.sec-h{color:#fff;}
+  .band .sec-lede{color:#B9BCC2;}
+  .prob-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;}
+  @media(min-width:760px){.prob-grid{grid-template-columns:repeat(3,1fr);}}
+  .prob{border:1px solid #2E3138;border-radius:14px;padding:26px 24px;background:#1F2229;}
+  .prob .n{font-family:var(--mono);font-size:13px;color:var(--hl);margin-bottom:16px;letter-spacing:.04em;}
+  .prob h3{font-size:19px;margin:0 0 10px;letter-spacing:-.01em;color:#fff;}
+  .prob p{margin:0;color:#AEB1B8;font-size:15.5px;line-height:1.6;}
+
+  /* callout stat */
+  .callout{margin:30px 0;padding:26px 28px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--hl-deep);border-radius:12px;box-shadow:var(--shadow);}
+  .callout .big{font-family:var(--mono);font-size:clamp(28px,4vw,36px);font-weight:800;letter-spacing:-.02em;color:var(--ink);line-height:1.1;}
+  .callout p{margin:10px 0 0;font-size:15.5px;color:var(--ink-soft);line-height:1.62;max-width:62ch;}
+  .callout p:first-of-type{margin-top:10px;}
+
+  /* comparison two-col */
+  .vs{display:grid;grid-template-columns:1fr;gap:18px;margin-top:40px;}
+  @media(min-width:760px){.vs{grid-template-columns:1fr 1fr;}}
+  .vs-col{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 26px 28px;box-shadow:var(--shadow);}
+  .vs-col h3{margin:0 0 4px;font-size:14px;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint);}
+  .vs-col .tl{font-size:21px;font-weight:800;letter-spacing:-.02em;margin:0 0 16px;}
+  .vs-col ul{list-style:none;margin:0;padding:0;display:grid;gap:12px;}
+  .vs-col li{display:flex;gap:11px;font-size:15.5px;color:var(--ink-soft);line-height:1.5;align-items:flex-start;}
+  .vs-col li::before{content:"";flex:none;width:8px;height:8px;margin-top:7px;border-radius:2px;background:var(--line-strong);}
+  .vs-col.geo li::before{background:var(--hl);}
+
+  /* factors list */
+  .deliv{list-style:none;margin:40px 0 0;padding:0;display:grid;gap:2px;}
+  .deliv li{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);}
+  .deliv li:last-child{border-bottom:0;}
+  .deliv .ic{flex:none;width:34px;height:34px;border-radius:9px;background:var(--paper);border:1px solid var(--line-strong);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--hl-deep);}
+  .deliv h3{margin:0 0 4px;font-size:17px;letter-spacing:-.01em;}
+  .deliv p{margin:0;font-size:15.5px;color:var(--ink-soft);line-height:1.55;max-width:64ch;}
+
+  /* measure links */
+  .link-cards{display:grid;grid-template-columns:1fr;gap:16px;margin-top:36px;}
+  @media(min-width:760px){.link-cards{grid-template-columns:1fr 1fr;}}
+  .lcard{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow);transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease;}
+  .lcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--line-strong);}
+  .lcard .k{font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--hl-deep);margin-bottom:8px;}
+  .lcard h3{margin:0 0 6px;font-size:18px;letter-spacing:-.015em;}
+  .lcard p{margin:0;font-size:14.5px;color:var(--ink-soft);line-height:1.5;}
+  .lcard .go{display:inline-block;margin-top:12px;font-weight:600;font-size:14.5px;color:var(--ink);}
+
+  /* CTA band */
+  .cta-band{background:var(--ink);color:#fff;border-radius:22px;padding:clamp(34px,5vw,56px) clamp(28px,4vw,48px);box-shadow:var(--shadow-lg);}
+  .cta-band .sec-label{color:var(--hl);}
+  .cta-band h2{font-size:clamp(26px,3.6vw,38px);line-height:1.08;letter-spacing:-.026em;margin:0 0 14px;color:#fff;max-width:22ch;}
+  .cta-band p{color:#B4B7BE;font-size:17px;line-height:1.6;margin:0 0 26px;max-width:58ch;}
+  .cta-band .btn-primary{background:var(--hl);color:var(--ink);}
+  .cta-band .btn-primary:hover{background:#ffd633;box-shadow:0 10px 26px rgba(255,222,89,.25);}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+  .cta-band .btn-ghost{color:#fff;border-color:#3a3e46;}
+  .cta-band .btn-ghost:hover{background:#22252c;border-color:#5a5e66;}
+
+  /* footer */
+  footer.site{background:var(--ink);color:#B4B7BE;padding:56px 0 40px;}
+  .foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;}
+  .foot-brand{max-width:34ch;}
+  .foot-brand .brand{color:#fff;font-size:22px;}
+  .foot-brand .brand .who,.foot-brand .brand .you{color:#fff;}
+  .foot-brand p{font-size:14px;line-height:1.6;margin:16px 0 0;color:#9195A0;}
+  .foot-cols{display:flex;gap:56px;flex-wrap:wrap;}
+  .foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);color:#6E727C;margin:0 0 14px;}
+  .foot-col a{display:block;text-decoration:none;color:#B4B7BE;font-size:14.5px;margin-bottom:10px;}
+  .foot-col a:hover{color:#fff;}
+  .foot-bottom{margin-top:44px;padding-top:22px;border-top:1px solid #2E3138;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:13px;color:#757983;}
+
+  :focus-visible{outline:2px solid var(--hl-deep);outline-offset:3px;border-radius:4px;}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html" aria-label="WhoCitesYou home">
+      <span class="who">Who</span><span class="cites">Cites</span><span class="you">You</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a class="here" href="what-is-geo.html">What is GEO?</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="index.html#samples">Sample reports</a>
+      <a class="btn btn-primary nav-cta" href="index.html#start">Free mini-audit</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">Home</a> / What is GEO</div>
+      <div style="height:18px"></div>
+      <span class="eyebrow"><span class="dot"></span> Generative engine optimization · GEO / AEO</span>
+      <h1 class="hero-h">What is GEO (generative engine optimization)?</h1>
+      <p class="hero-sub">GEO, also called AEO (answer engine optimization), is the practice of getting your brand named and cited when buyers ask an AI which product or provider to use. Your customers now ask ChatGPT, Gemini, and Perplexity before they reach your website, and the shortlist forms inside the answer. GEO is how you get onto that shortlist.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <div class="sec-label">The short definition</div>
+      <h2 class="sec-h">GEO is SEO for the AI answer, not the search results page</h2>
+      <div class="prose">
+        <p>For twenty years, being found meant ranking on Google. You optimized pages, earned links, and fought for one of ten blue links. The buyer clicked through, compared for themselves, and decided.</p>
+        <p>That step is disappearing. When someone asks an AI assistant &ldquo;what's the best tool for X?&rdquo; they get one synthesized recommendation naming a handful of brands, and they rarely go further. <b>The comparison now happens inside the answer, not on your website.</b> If the model doesn't mention you, you're not on page two of anything. You simply aren't in the decision.</p>
+        <p>Generative engine optimization is the discipline of influencing that. GEO and AEO are the same idea under two names: <b>make your brand the one an AI engine names, cites, and recommends</b> when a buyer asks a question in your category. It is the clearest new marketing category of 2025 and 2026, and it is measurable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-label">Why GEO exists now</div>
+      <h2 class="sec-h">Buyers stopped Googling. They ask the AI.</h2>
+      <p class="sec-lede">The behavior change is already here. A growing share of high-intent research now starts with a question to an assistant rather than a search box, and the assistant answers with a recommendation instead of a list of links to sift through.</p>
+      <div class="prob-grid">
+        <div class="prob">
+          <div class="n">01</div>
+          <h3>The answer is the new front page</h3>
+          <p>ChatGPT, Gemini, and Perplexity name a short list of brands and move on. There is no page of results to work down, only who is in the answer and who is not.</p>
+        </div>
+        <div class="prob">
+          <div class="n">02</div>
+          <h3>The shortlist forms before you're visited</h3>
+          <p>By the time a buyer reaches a website, the AI has usually already framed the choice. Being absent from that framing means being cut before the consideration set even forms.</p>
+        </div>
+        <div class="prob">
+          <div class="n">03</div>
+          <h3>Classic rankings no longer carry over</h3>
+          <p>Ranking #1 on Google does not guarantee the AI cites you. The engines read a different, overlapping-but-distinct set of sources, so old wins do not automatically transfer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <div class="sec-label">GEO vs SEO</div>
+      <h2 class="sec-h">How GEO differs from classic SEO</h2>
+      <div class="prose">
+        <p>GEO is not a rebrand of SEO. The two overlap, but they optimize for different surfaces and reward different things. The most important difference is that a strong Google ranking does not reliably buy you a mention in an AI answer.</p>
+      </div>
+
+      <div class="callout">
+        <div class="big">Only 17&ndash;38% overlap</div>
+        <p>Across industry research, only roughly <b>17 to 38 percent of the sources AI engines cite overlap with the top 10 Google results</b> for the same query. The majority of what an AI quotes is not the same as what ranks first on Google. Optimizing purely for classic search leaves most of your AI visibility on the table.</p>
+      </div>
+
+      <div class="callout">
+        <div class="big">~58% fewer clicks</div>
+        <p>Industry research also finds AI Overviews cut clicks to the #1 Google result by roughly <b>58 percent</b>. Even when you still rank, the click that used to follow the ranking is increasingly absorbed by the answer above it. The visibility that matters is being in the answer, not just under it.</p>
+      </div>
+
+      <div class="vs">
+        <div class="vs-col">
+          <h3>Classic SEO</h3>
+          <div class="tl">Optimizes the results page</div>
+          <ul>
+            <li>Goal: rank a page in the top 10 blue links.</li>
+            <li>Unit of success: position on the results page.</li>
+            <li>Buyer clicks through and compares for themselves.</li>
+            <li>Measured with rank trackers and organic traffic.</li>
+            <li>Signals: keywords, backlinks, on-page structure, speed.</li>
+          </ul>
+        </div>
+        <div class="vs-col geo">
+          <h3>GEO / AEO</h3>
+          <div class="tl">Optimizes the answer</div>
+          <ul>
+            <li>Goal: get named and cited inside the AI's recommendation.</li>
+            <li>Unit of success: mention rate and share of voice in answers.</li>
+            <li>The AI compares for the buyer, then hands one shortlist.</li>
+            <li>Measured by auditing what engines actually say, repeatedly.</li>
+            <li>Signals: extractable content, third-party sources, comparisons.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:linear-gradient(180deg,#fff,#F4F5F2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <div class="wrap narrow">
+      <div class="sec-label">What moves the needle</div>
+      <h2 class="sec-h">What determines whether an AI names your brand</h2>
+      <p class="sec-lede">AI engines assemble an answer from what they can read, extract cleanly, and corroborate across sources. A few factors do most of the work in deciding whether your brand makes the cut.</p>
+      <ul class="deliv">
+        <li>
+          <span class="ic">01</span>
+          <div><h3>Extractable, structured content</h3><p>Clear pages that state what you do, who you're for, and how you compare in plain language the model can lift verbatim. Facts buried in images, PDFs, or marketing prose are hard for an engine to quote.</p></div>
+        </li>
+        <li>
+          <span class="ic">02</span>
+          <div><h3>Third-party sources the engines actually read</h3><p>Independent reviews, listicles, directories, and reputable coverage carry disproportionate weight. Engines corroborate across sources, so being described consistently on pages you don't own is often what earns the citation.</p></div>
+        </li>
+        <li>
+          <span class="ic">03</span>
+          <div><h3>Comparison and alternative content</h3><p>&ldquo;X vs Y&rdquo; and &ldquo;best alternative to Z&rdquo; pages map directly onto how buyers phrase questions to AI. When the definitive comparison exists and is accurate, engines lean on it and frame the category around you.</p></div>
+        </li>
+        <li>
+          <span class="ic">04</span>
+          <div><h3>Consistency and freshness</h3><p>Engines default to whatever story is most repeated and most current. After a repositioning, price change, or launch, AI answers lag until fresh, well-structured pages give the models something up to date to quote.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <div class="sec-label">Measurement</div>
+      <h2 class="sec-h">How to measure your AI visibility</h2>
+      <div class="prose">
+        <p>GEO only works as measurement, not guesswork. Because AI answers vary between runs, a single screenshot proves nothing. You need to run the buyer-intent questions in your category across each engine, repeatedly and in fresh sessions, then classify every result as cited, invisible, or misrepresented and track your share of voice against competitors over time.</p>
+        <p>That's exactly what a WhoCitesYou audit does. Read the full methodology, or read complete sample reports to see the output.</p>
+      </div>
+      <div class="link-cards">
+        <a class="lcard" href="methodology.html">
+          <div class="k">How we measure</div>
+          <h3>Our methodology</h3>
+          <p>The full protocol: buyer-intent queries across three engines, repeated trials in fresh chats, verbatim capture, and a 0&ndash;100 score.</p>
+          <span class="go">Read the methodology &rarr;</span>
+        </a>
+        <a class="lcard" href="samples/tabby-mini-audit.html">
+          <div class="k">Sample · score 96</div>
+          <h3>Tabby mini-audit</h3>
+          <p>What winning AI search looks like: cited in all 18 sampled answers, first pick on the flagship query across every engine.</p>
+          <span class="go">Read the sample &rarr;</span>
+        </a>
+        <a class="lcard" href="samples/calcom-mini-audit.html">
+          <div class="k">Sample · score 85</div>
+          <h3>Cal.com mini-audit</h3>
+          <p>Leading the category but still framed as the alternative to beat, with the one fix that re-anchors the story.</p>
+          <span class="go">Read the sample &rarr;</span>
+        </a>
+        <a class="lcard" href="samples/ziina-ai-visibility-audit.html">
+          <div class="k">Sample · score 43</div>
+          <h3>Ziina full audit</h3>
+          <p>What losing AI search looks like: invisible on 10 high-intent answers while rivals get named instead.</p>
+          <span class="go">Read the sample &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:24px;">
+    <div class="wrap">
+      <div class="cta-band">
+        <div class="sec-label">Start here</div>
+        <h2>See where AI cites you &mdash; free 1-page mini-audit</h2>
+        <p>Tell us your website and we'll run a free sample: 3 real buying queries across ChatGPT, Gemini, and Perplexity, plus one clear insight on where you stand. No payment, no catch. The full AI Visibility Audit is $197 during founding-client pricing.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary btn-lg" href="index.html#start">Get a free mini-audit</a>
+          <a class="btn btn-ghost btn-lg" href="index.html#samples">See a real sample report</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="brand"><span class="who">Who</span><span class="cites">Cites</span><span class="you">You</span></span>
+        <p>The AI visibility audit that shows where you're cited, where you're invisible, and who wins your category across ChatGPT, Gemini and Perplexity. A division of Deep Mist AI FZE LLC.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="index.html#audit">The audit</a>
+          <a href="index.html#samples">Sample reports</a>
+          <a href="index.html#start">Free mini-audit</a>
+        </div>
+        <div class="foot-col">
+          <h4>Learn</h4>
+          <a href="what-is-geo.html">What is GEO?</a>
+          <a href="methodology.html">Our methodology</a>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="index.html#about">About</a>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="refunds.html">Refunds</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Deep Mist AI FZE LLC · Ajman Media City Free Zone, UAE</span>
+      <span>Prices in USD · Founded 2019</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
