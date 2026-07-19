@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cal.com Free AI Visibility Mini-Audit | WhoCitesYou</title>
+<title>Sarwa Free AI Visibility Mini-Audit | WhoCitesYou</title>
 </head>
 <body>
 <style>
@@ -11,6 +11,7 @@
     --bg:#ffffff; --fg:#1b201f; --muted:#5c6a68; --line:#e4e8e7;
     --accent:#0f5c5a; --accent-2:#0f5c5a; --accent-soft:#e9f1f0; --card:#f7faf9;
     --warn:#8a6d18; --warn-soft:#f6f0dc; --track:#eef2f1;
+    --miss:#a8321f; --miss-soft:#f7e7e3;
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
@@ -19,6 +20,7 @@
       --bg:#0f1413; --fg:#e7ecea; --muted:#98a7a4; --line:#28302e;
       --accent:#4fb3ad; --accent-2:#63c7c0; --accent-soft:#16211f; --card:#161c1a;
       --warn:#d9b85a; --warn-soft:#23200f; --track:#1d2523;
+      --miss:#e0917f; --miss-soft:#2a1714;
     }
   }
   *{box-sizing:border-box;}
@@ -53,12 +55,14 @@
   .cell.top{background:var(--accent); color:#fff;}
   .cell.listed{background:var(--accent-soft); color:var(--accent);}
   .cell.neutral{background:var(--warn-soft); color:var(--warn); border:1px solid var(--warn);}
+  .cell.miss{background:var(--miss-soft); color:var(--miss); border:1px solid var(--miss);}
   .legend{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:14px; font-size:12.5px; color:var(--muted);}
   .legend span{display:inline-flex; align-items:center; gap:7px;}
   .legend .sw{width:11px; height:11px; border-radius:3px; flex:none;}
   .legend .sw.top{background:var(--accent);}
   .legend .sw.listed{background:var(--accent-soft); border:1px solid var(--accent);}
   .legend .sw.neutral{background:var(--warn-soft); border:1px solid var(--warn);}
+  .legend .sw.miss{background:var(--miss-soft); border:1px solid var(--miss);}
   .grid-note{font-size:13px; color:var(--muted); margin:16px 0 0;}
   .sov{margin:6px 0 0; display:flex; flex-direction:column; gap:11px;}
   .sov-row{display:grid; grid-template-columns:150px 1fr 52px; align-items:center; gap:14px; font-size:14px;}
@@ -105,27 +109,27 @@
   </header>
 
   <section class="cover">
-    <div class="cover-cat">Scheduling &amp; booking software</div>
-    <h1 class="cover-title">Cal.com</h1>
-    <div class="cover-date">July 9, 2026</div>
+    <div class="cover-cat">Investment &amp; wealth apps &middot; UAE</div>
+    <h1 class="cover-title">Sarwa</h1>
+    <div class="cover-date">July 19, 2026</div>
     <div class="cover-score">
-      <div class="cover-score-num">83</div>
+      <div class="cover-score-num">68</div>
       <div class="cover-score-den">/ 100</div>
     </div>
     <div class="cover-label">Overall AI visibility score</div>
-    <p class="cover-verdict">Cal.com is cited in all 18 sampled answers and is the first-listed pick on the open-source scheduling query across every engine, leading share of voice at 40.1% just ahead of Calendly (35.8%). The one soft spot: on the category and head-to-head questions, the engines still lead with Calendly as the reference point.</p>
+    <p class="cover-verdict">Sarwa is cited in 14 of the 18 sampled answers and is the outright first pick, the &ldquo;best overall for beginners&rdquo;, on the category question in all three engines. The gap that pulls the score down is one query: for expats asking how to start investing in index funds, Sarwa goes completely invisible in ChatGPT and Perplexity, which hand that high-intent question to Interactive Brokers, Saxo Bank and eToro instead.</p>
     <div class="engine-scores">
-      <span>ChatGPT&nbsp;<b>83</b></span>
-      <span>Gemini&nbsp;<b>80</b></span>
-      <span>Perplexity&nbsp;<b>87</b></span>
-      <span>Share of voice&nbsp;<b>40.1%</b></span>
+      <span>ChatGPT&nbsp;<b>52</b></span>
+      <span>Gemini&nbsp;<b>90</b></span>
+      <span>Perplexity&nbsp;<b>63</b></span>
+      <span>Share of voice&nbsp;<b>39.2%</b></span>
       <span>Accuracy issues&nbsp;<b>0</b></span>
     </div>
   </section>
 
   <section class="sec">
     <h2>Where AI puts you</h2>
-    <p class="lede">Three real buyer queries, run across ChatGPT, Gemini and Perplexity in two trials each. Cal.com was cited in every single answer. The difference is <em>how strongly</em> each engine backs it, and whether Calendly gets treated as the brand to beat.</p>
+    <p class="lede">Three real buyer queries, run across ChatGPT, Gemini and Perplexity in two trials each. Sarwa wins the beginner question outright, but the picture changes completely once the question shifts to expats and index funds.</p>
     <table class="grid-tbl">
       <thead>
         <tr>
@@ -137,51 +141,51 @@
       </thead>
       <tbody>
         <tr>
-          <td class="q">What is the best Calendly alternative in 2026?<div class="q-meta">Category · flagship</div></td>
-          <td><span class="cell listed">Recommended</span></td>
-          <td><span class="cell listed">Recommended</span></td>
-          <td><span class="cell listed">Recommended</span></td>
+          <td class="q">What is the best investment app in the UAE for beginners?<div class="q-meta">Category &middot; flagship</div></td>
+          <td><span class="cell top">Top pick</span></td>
+          <td><span class="cell top">Top pick</span></td>
+          <td><span class="cell top">Top pick</span></td>
         </tr>
         <tr>
-          <td class="q">Cal.com vs Calendly, which should I use?<div class="q-meta">Comparison</div></td>
+          <td class="q">Sarwa vs StashAway vs baraka, which should I use?<div class="q-meta">Comparison</div></td>
           <td><span class="cell neutral">Split verdict</span></td>
           <td><span class="cell neutral">Split verdict</span></td>
-          <td><span class="cell listed">Named first</span></td>
+          <td><span class="cell neutral">Split verdict</span></td>
         </tr>
         <tr>
-          <td class="q">What's a good open-source scheduling tool for my team?<div class="q-meta">Open-source use-case</div></td>
-          <td><span class="cell top">Top pick</span></td>
-          <td><span class="cell top">Top pick</span></td>
-          <td><span class="cell top">Top pick</span></td>
+          <td class="q">How can an expat in Dubai start investing in index funds?<div class="q-meta">Use-case</div></td>
+          <td><span class="cell miss">Invisible</span></td>
+          <td><span class="cell listed">Recommended</span></td>
+          <td><span class="cell miss">Invisible</span></td>
         </tr>
       </tbody>
     </table>
     <div class="legend">
       <span><span class="sw top"></span> Top pick: first-listed, the standout choice</span>
-      <span><span class="sw listed"></span> Recommended: named as a strong pick (behind Calendly as the reference)</span>
+      <span><span class="sw listed"></span> Recommended: named as a real option, not the lead</span>
       <span><span class="sw neutral"></span> Split verdict: recommended, but the head-to-head is left balanced</span>
+      <span><span class="sw miss"></span> Invisible: not named in the answer at all</span>
     </div>
-    <p class="grid-note">The pattern worth noticing: Cal.com is the outright first pick whenever the question is about open-source scheduling, but on &ldquo;best Calendly alternative&rdquo; and &ldquo;Cal.com vs Calendly&rdquo; the engines anchor on Calendly first and hand it the framing. Perplexity is the exception, ranking Cal.com first on the head-to-head, which is why it scores 87 to ChatGPT's 83 and Gemini's 80.</p>
+    <p class="grid-note">The pattern worth noticing: Sarwa owns the beginner question, but the expat index-fund question is where it disappears. ChatGPT and Perplexity left Sarwa out of that answer in <em>both</em> trials, so this is a consistent gap rather than one unlucky run, and both engines named foreign brokers (Interactive Brokers, Saxo Bank, Swissquote, eToro) in its place. Only Gemini cited Sarwa there, and its second trial went further and made Sarwa the sole robo-advisor pick. On the head-to-head, Gemini also shows how fragile a balanced verdict is: its second trial handed the passive-investing default to StashAway and demoted Sarwa to the &ldquo;all-in-one&rdquo; option. No misrepresentations appeared in any of the 18 answers.</p>
   </section>
 
   <section class="sec">
     <h2>Who wins the category</h2>
-    <p class="lede">Share of voice across all 18 answers: how often each brand is named when buyers ask about scheduling tools. Cal.com edges out the market's default name.</p>
+    <p class="lede">Share of voice across all 18 answers: how often each brand is named when buyers ask about investing in the UAE. Sarwa leads, but baraka is closer than the beginner-question win suggests.</p>
     <div class="sov">
-      <div class="sov-row"><span class="name">Cal.com</span><span class="sov-track"><i class="you" style="width:100%;"></i></span><span class="val">40.1%</span></div>
-      <div class="sov-row"><span class="name rival">Calendly</span><span class="sov-track"><i class="rival" style="width:89.3%;"></i></span><span class="val rival">35.8%</span></div>
-      <div class="sov-row"><span class="name rival">Acuity Scheduling</span><span class="sov-track"><i class="rival" style="width:15.2%;"></i></span><span class="val rival">6.1%</span></div>
-      <div class="sov-row"><span class="name rival">Doodle</span><span class="sov-track"><i class="rival" style="width:11.7%;"></i></span><span class="val rival">4.7%</span></div>
-      <div class="sov-row"><span class="name rival">Others</span><span class="sov-track"><i class="rival" style="width:32.7%;"></i></span><span class="val rival">13.1%</span></div>
+      <div class="sov-row"><span class="name">Sarwa</span><span class="sov-track"><i class="you" style="width:100%;"></i></span><span class="val">39.2%</span></div>
+      <div class="sov-row"><span class="name rival">baraka</span><span class="sov-track"><i class="rival" style="width:67.6%;"></i></span><span class="val rival">26.5%</span></div>
+      <div class="sov-row"><span class="name rival">StashAway</span><span class="sov-track"><i class="rival" style="width:52.3%;"></i></span><span class="val rival">20.5%</span></div>
+      <div class="sov-row"><span class="name rival">Others</span><span class="sov-track"><i class="rival" style="width:35.2%;"></i></span><span class="val rival">13.8%</span></div>
     </div>
-    <p class="grid-note">Others: TidyCal (6.1%), Chili Piper (3.3%), SavvyCal (2.8%) and YouCanBookMe (0.9%). Cal.com leads on total mentions, but Calendly stays close because the engines keep it in frame as the point of comparison, even in answers that ultimately recommend Cal.com.</p>
+    <p class="grid-note">Others: Interactive Brokers (8.4%), eToro (4.2%), Wahed (1.2%) and Wio (0%). Sarwa leads on total mentions, but baraka stays close because the engines keep naming it as the do-it-yourself counterpart in almost every answer, even the ones that ultimately recommend Sarwa for beginners.</p>
   </section>
 
   <section class="sec">
     <h2>In the engine's own words</h2>
     <blockquote class="quote">
-      <p>&ldquo;Cal.com is widely considered the reigning champion of open-source meeting schedulers.&rdquo;</p>
-      <cite><span class="engine-tag">Gemini</span> in response to &ldquo;What's a good open-source scheduling tool for my team?&rdquo;</cite>
+      <p>&ldquo;Commonly mentioned options for UAE residents include Interactive Brokers, Saxo, Swissquote, and eToro.&rdquo;</p>
+      <cite><span class="engine-tag">Perplexity</span> in response to &ldquo;How can an expat in Dubai start investing in index funds?&rdquo;, a UAE-specific answer that named four foreign brokers and left the local category leader out entirely.</cite>
     </blockquote>
   </section>
 
@@ -189,8 +193,8 @@
     <h2>The one fix worth making</h2>
     <div class="fix">
       <div class="fix-tag">Highest-impact recommendation</div>
-      <p>Re-anchor the current commercial positioning. Every engine still describes Cal.com through its pre-April-2026 open-source identity, and ChatGPT and Gemini point self-hosters to the cal.diy fork as the free way to run it. That framing is now out of date: per Cal.com's own April 2026 announcement (<a href="https://cal.com/blog/cal-com-goes-closed-source-why">cal.com goes closed-source, and why</a>), the commercial product went closed-source and the community edition became the separately branded cal.diy (now MIT). In effect, the engines are pointing scheduling buyers to the free fork on the strength of Cal.com's old story.</p>
-      <p>The highest-impact fix is to publish authoritative, structured pages that state the current positioning: a licensing and About page, a clear cal.com-vs-cal.diy explainer, and updated self-hosting docs. Give the engines fresh sources to cite and they stop defaulting buyers to the free self-hosted option. This is a useful lesson for any brand that ships a big repositioning: AI answers lag your latest messaging until new, well-structured pages give the models something current to quote.</p>
+      <p>Close the expat index-fund gap. This is the single query that costs Sarwa the most in AI answers, and it is a question Sarwa should own. Ask &ldquo;How can an expat in Dubai start investing in index funds?&rdquo; and ChatGPT and Perplexity do not name Sarwa at all, across both trials. Instead they route the reader to Interactive Brokers, Saxo Bank, Swissquote and eToro, or to a generic &ldquo;use a robo-advisor&rdquo; step with no brand attached. Only Gemini cites Sarwa on this question.</p>
+      <p>The highest-impact fix is to publish authoritative, structured content that answers this exact query: an expat's guide to index-fund investing in the UAE, a UCITS and Irish-domiciled ETF explainer, and an AED-funding walkthrough. Give the engines a current Sarwa source to cite for the expat and index-fund intent, and Sarwa can convert a question it is losing outright into one it wins, the same way it already wins the beginner question. The lesson generalizes: AI engines cite you where you have published clearly for the question being asked, and they hand the answer to rivals everywhere you have not.</p>
     </div>
   </section>
 
@@ -200,18 +204,18 @@
       <h3>The full AI Visibility Audit: <span class="cta-price">$197</span></h3>
       <p class="lede" style="margin:2px 0 0;">This free mini samples 3 queries. The full audit is the complete, defensible picture:</p>
       <ul>
-        <li><b>12 queries × 3 engines</b>, with repeated trials: a stable read, not one lucky answer.</li>
+        <li><b>12 queries &times; 3 engines</b>, with repeated trials: a stable read, not one lucky answer.</li>
         <li><b>Full competitor share-of-voice</b>: who wins your category in AI answers, and by how much.</li>
         <li><b>Complete prioritized fix list</b>: every gap ranked by expected impact, not just the teaser above.</li>
         <li><b>Per-engine breakdown</b>: mention rate, strength and #1-recommendation rate for each engine.</li>
       </ul>
-      <a class="btn" href="https://whocitesyou.com/">Get the full audit →</a>
+      <a class="btn" href="https://whocitesyou.com/">Get the full audit &rarr;</a>
     </div>
   </section>
 
   <footer class="footnote">
     <div class="brandmark small">WhoCitesYou</div>
-    <div class="muted">Methodology: 3 queries × 3 engines × 2 trials (18 captures), each run in a fresh session, collected July 9, 2026. AI answers vary between runs, so this is a sample, not a census.</div>
+    <div class="muted">Methodology: 3 queries &times; 3 engines &times; 2 trials (18 captures), each run in a fresh session, collected July 19, 2026. AI answers vary between runs, so this is a sample, not a census.</div>
     <div class="muted">A division of Deep Mist AI FZE LLC. Findings are a sample of AI engine behavior and will vary between runs.</div>
   </footer>
 </div>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visibility in UAE Fintech: What ChatGPT, Gemini and Perplexity Recommend - WhoCitesYou</title>
+<meta name="description" content="A data-backed roundup of AI visibility in UAE fintech, with exact scores and engine-level findings for Tabby, Sarwa and Ziina.">
+<link rel="canonical" href="https://whocitesyou.com/ai-visibility-uae-fintech.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Visibility in UAE Fintech: What the Answer Engines Recommend">
+<meta property="og:description" content="See how Tabby, Sarwa and Ziina appear across audited answers from ChatGPT, Gemini and Perplexity.">
+<meta property="og:url" content="https://whocitesyou.com/ai-visibility-uae-fintech.html">
+<meta property="og:image" content="https://whocitesyou.com/assets/banner.png">
+<meta property="og:site_name" content="WhoCitesYou">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Visibility in UAE Fintech: What the Answer Engines Recommend">
+<meta name="twitter:description" content="A data-backed comparison of Tabby, Sarwa and Ziina across ChatGPT, Gemini and Perplexity.">
+<meta name="twitter:image" content="https://whocitesyou.com/assets/banner.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231A1C22'/%3E%3Crect x='18' y='54' width='64' height='16' rx='3' fill='%23FFDE59'/%3E%3Ctext x='50' y='46' font-family='Georgia,serif' font-size='52' font-weight='700' fill='%23F4F5F2' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#1A1C22;
+    --ink-soft:#565A63;
+    --ink-faint:#8A8D94;
+    --paper:#F4F5F2;
+    --surface:#FFFFFF;
+    --line:#E4E5E1;
+    --line-strong:#D3D4CF;
+    --hl:#FFDE59;
+    --hl-deep:#E8B800;
+    --alert:#CE3A2C;
+    --alert-soft:#FBEAE7;
+    --good:#1F7A5C;
+    --shadow:0 1px 2px rgba(20,22,26,.05),0 8px 30px rgba(20,22,26,.06);
+    --shadow-lg:0 2px 6px rgba(20,22,26,.06),0 20px 60px rgba(20,22,26,.10);
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Times New Roman",Times,serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --wrap:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:inherit;}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px;}
+  .narrow{max-width:800px;}
+
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(244,245,242,.82);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line);}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{display:flex;align-items:baseline;gap:0;font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;}
+  .brand .who,.brand .you{color:var(--ink);}
+  .brand .cites{position:relative;padding:0 1px;}
+  .brand .cites::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:7px;background:var(--hl);z-index:-1;}
+  .nav-links{display:flex;align-items:center;gap:28px;}
+  .nav-links a{font-size:15px;text-decoration:none;color:var(--ink-soft);font-weight:500;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{display:none;}
+  @media(min-width:780px){.nav-cta{display:inline-flex;}}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;border-radius:10px;padding:11px 18px;border:1px solid transparent;transition:transform .12s ease,box-shadow .2s ease,background .2s ease;}
+  .btn-primary{background:var(--ink);color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(20,22,26,.22);}
+  .btn-lg{padding:15px 26px;font-size:17px;border-radius:12px;}
+
+  .crumbs{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:26px;}
+  .crumbs a{color:var(--ink-soft);text-decoration:none;}
+  .crumbs a:hover{color:var(--ink);}
+  .hero{padding:26px 0 50px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line-strong);background:#fff;border-radius:999px;padding:6px 13px;margin:18px 0 24px;}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px rgba(31,122,92,.15);}
+  h1.hero-h{font-size:clamp(36px,5.5vw,62px);line-height:1.02;letter-spacing:-.034em;font-weight:800;margin:0 0 22px;max-width:18ch;}
+  .hero-sub{font-size:clamp(18px,2.1vw,21px);color:var(--ink-soft);max-width:62ch;margin:0;line-height:1.55;}
+  .spec{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:28px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+  .spec b{color:var(--ink);font-weight:600;}
+  .spec span{display:inline-flex;align-items:center;gap:8px;}
+  .spec span::before{content:"";width:5px;height:5px;background:var(--hl-deep);border-radius:50%;}
+
+  section{padding:64px 0;}
+  .sec-label{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--hl-deep);font-weight:600;margin-bottom:14px;}
+  h2.sec-h{font-size:clamp(27px,3.7vw,40px);line-height:1.08;letter-spacing:-.029em;font-weight:800;margin:0 0 18px;max-width:24ch;}
+  .prose p{font-size:17px;line-height:1.72;color:var(--ink-soft);margin:0 0 18px;max-width:68ch;}
+  .prose p b{color:var(--ink);}
+  .prose a{color:var(--ink);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--hl-deep);}
+
+  .score-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:36px;}
+  @media(min-width:820px){.score-grid{grid-template-columns:repeat(3,1fr);}}
+  .score-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:26px;box-shadow:var(--shadow);}
+  .score-card h3{font-size:22px;margin:0 0 14px;letter-spacing:-.018em;}
+  .score-card h3 a{text-decoration:none;}
+  .score-card h3 a:hover{text-decoration:underline;text-decoration-color:var(--hl-deep);text-underline-offset:3px;}
+  .score{display:flex;align-items:baseline;gap:7px;margin-bottom:18px;}
+  .score strong{font-family:var(--serif);font-size:58px;line-height:.9;letter-spacing:-.045em;}
+  .score span{font-family:var(--mono);font-size:13px;color:var(--ink-faint);}
+  .score-card p{font-size:15px;line-height:1.62;color:var(--ink-soft);margin:0 0 18px;}
+  .score-card .read{margin-top:auto;font-size:14.5px;font-weight:700;text-decoration:none;}
+  .score-card .read:hover{text-decoration:underline;text-decoration-color:var(--hl-deep);text-underline-offset:3px;}
+
+  .band{background:var(--ink);color:#EDEEEA;}
+  .band .sec-label{color:var(--hl);}
+  .band h2.sec-h{color:#fff;}
+  .pattern-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:34px;}
+  @media(min-width:760px){.pattern-grid{grid-template-columns:1fr 1fr;}}
+  .pattern{border:1px solid #343740;border-radius:14px;padding:25px;background:#1F2229;}
+  .pattern .tag{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--hl);margin-bottom:10px;}
+  .pattern h3{font-size:19px;color:#fff;margin:0 0 8px;letter-spacing:-.013em;}
+  .pattern h3 a{text-decoration-color:var(--hl);text-underline-offset:3px;}
+  .pattern p{font-size:15.5px;line-height:1.62;color:#AEB1B8;margin:0;}
+  .pattern b{color:#fff;}
+  .pattern a{color:inherit;}
+
+  .matrix-wrap{margin-top:34px;overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;min-width:720px;font-size:14.5px;}
+  th,td{text-align:left;vertical-align:top;padding:18px 19px;border-bottom:1px solid var(--line);}
+  th{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint);background:#FAFAF8;}
+  td{color:var(--ink-soft);line-height:1.55;}
+  td:first-child{font-weight:700;color:var(--ink);width:16%;}
+  td:first-child a{text-decoration-color:var(--hl-deep);text-underline-offset:3px;}
+  tr:last-child td{border-bottom:0;}
+  .yes{color:var(--good);font-weight:700;}
+  .no{color:var(--alert);font-weight:700;}
+  .note{margin-top:24px;font-size:14.5px;line-height:1.65;color:var(--ink-soft);max-width:70ch;}
+
+  .takeaway{display:grid;grid-template-columns:1fr;gap:18px;margin-top:34px;}
+  @media(min-width:820px){.takeaway{grid-template-columns:repeat(3,1fr);}}
+  .take{border-top:3px solid var(--ink);padding:18px 4px 0;}
+  .take h3{margin:0 0 8px;font-size:18px;letter-spacing:-.012em;}
+  .take p{margin:0;color:var(--ink-soft);font-size:15px;line-height:1.62;}
+  .take a{text-decoration-color:var(--hl-deep);text-underline-offset:3px;}
+
+  .cta-band{background:var(--ink);color:#fff;border-radius:22px;padding:clamp(34px,5vw,56px) clamp(28px,4vw,48px);box-shadow:var(--shadow-lg);}
+  .cta-band .sec-label{color:var(--hl);}
+  .cta-band h2{font-size:clamp(26px,3.6vw,38px);line-height:1.08;letter-spacing:-.026em;margin:0 0 14px;color:#fff;max-width:22ch;}
+  .cta-band p{color:#B4B7BE;font-size:17px;line-height:1.6;margin:0 0 26px;max-width:58ch;}
+  .cta-band .btn-primary{background:var(--hl);color:var(--ink);}
+  .cta-band .btn-primary:hover{background:#ffd633;box-shadow:0 10px 26px rgba(255,222,89,.25);}
+
+  footer.site{background:var(--ink);color:#B4B7BE;padding:56px 0 40px;}
+  .foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;}
+  .foot-brand{max-width:34ch;}
+  .foot-brand .brand{color:#fff;font-size:22px;}
+  .foot-brand .brand .who,.foot-brand .brand .you{color:#fff;}
+  .foot-brand p{font-size:14px;line-height:1.6;margin:16px 0 0;color:#9195A0;}
+  .foot-cols{display:flex;gap:56px;flex-wrap:wrap;}
+  .foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);color:#6E727C;margin:0 0 14px;}
+  .foot-col a{display:block;text-decoration:none;color:#B4B7BE;font-size:14.5px;margin-bottom:10px;}
+  .foot-col a:hover{color:#fff;}
+  .foot-bottom{margin-top:44px;padding-top:22px;border-top:1px solid #2E3138;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:13px;color:#757983;}
+  :focus-visible{outline:2px solid var(--hl-deep);outline-offset:3px;border-radius:4px;}
+  @media(max-width:720px){.nav-links{gap:15px;}.nav-links a:not(.nav-cta){font-size:13px;}.hero{padding-bottom:36px;}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html" aria-label="WhoCitesYou home">
+      <span class="who">Who</span><span class="cites">Cites</span><span class="you">You</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="what-is-geo.html">What is GEO?</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="index.html#samples">Sample reports</a>
+      <a class="btn btn-primary nav-cta" href="index.html#start">Free mini-audit</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">Home</a> / UAE fintech AI visibility</div>
+      <span class="eyebrow"><span class="dot"></span> UAE fintech field data</span>
+      <h1 class="hero-h">AI visibility in UAE fintech: who gets recommended</h1>
+      <p class="hero-sub">Audits of three UAE fintech brands show three very different positions: category dominance, a high-intent blind spot and visibility that changes sharply by engine.</p>
+      <div class="spec">
+        <span><b>ChatGPT</b></span>
+        <span><b>Gemini</b></span>
+        <span><b>Perplexity</b></span>
+        <span><b>3</b> audited brands</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <div class="wrap">
+      <div class="sec-label">The scorecard</div>
+      <h2 class="sec-h">Three brands, three visibility profiles</h2>
+      <div class="prose">
+        <p>These scores come from each brand's published audit and its own buyer-intent query set. Read them as diagnostics of where each brand appears in its category, not as a single shared-category league table.</p>
+      </div>
+      <div class="score-grid">
+        <article class="score-card">
+          <h3><a href="samples/tabby-mini-audit.html">Tabby</a></h3>
+          <div class="score"><strong>96</strong><span>/ 100 overall</span></div>
+          <p><a href="samples/tabby-mini-audit.html">Tabby</a> was cited in every sampled answer and recommended first on the flagship BNPL query by every engine. Tamara was the nearest rival across the audit.</p>
+          <a class="read" href="samples/tabby-mini-audit.html">Read the Tabby sample &rarr;</a>
+        </article>
+        <article class="score-card">
+          <h3><a href="samples/sarwa-mini-audit.html">Sarwa</a></h3>
+          <div class="score"><strong>68</strong><span>/ 100 overall</span></div>
+          <p><a href="samples/sarwa-mini-audit.html">Sarwa</a> performed strongly in Gemini, but disappeared from the expat index-fund query in both ChatGPT and Perplexity.</p>
+          <a class="read" href="samples/sarwa-mini-audit.html">Read the Sarwa sample &rarr;</a>
+        </article>
+        <article class="score-card">
+          <h3><a href="samples/ziina-ai-visibility-audit.html">Ziina</a></h3>
+          <div class="score"><strong>43</strong><span>/ 100 overall</span></div>
+          <p><a href="samples/ziina-ai-visibility-audit.html">Ziina</a> was absent from the payment-link answer in ChatGPT and Perplexity. Gemini did list the brand, showing how much the result changed by engine.</p>
+          <a class="read" href="samples/ziina-ai-visibility-audit.html">Read the Ziina sample &rarr;</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap narrow">
+      <div class="sec-label">Standout findings</div>
+      <h2 class="sec-h">Agreement at the top, blind spots underneath</h2>
+      <div class="pattern-grid">
+        <article class="pattern">
+          <div class="tag">Category control</div>
+          <h3>The <a href="samples/tabby-mini-audit.html">Tabby</a> and Tamara duopoly</h3>
+          <p>Every engine placed <a href="samples/tabby-mini-audit.html">Tabby</a> first on the flagship UAE BNPL query. Tamara was the top competitor by share of voice, while Postpay, Cashew and Spotii trailed.</p>
+        </article>
+        <article class="pattern">
+          <div class="tag">Use-case gap</div>
+          <h3><a href="samples/sarwa-mini-audit.html">Sarwa</a> vanished on the expat index-fund query</h3>
+          <p>ChatGPT and Perplexity both answered without naming <a href="samples/sarwa-mini-audit.html">Sarwa</a>. Gemini did name it, so the blind spot was large but not universal.</p>
+        </article>
+        <article class="pattern">
+          <div class="tag">Engine split</div>
+          <h3><a href="samples/ziina-ai-visibility-audit.html">Ziina</a> missed its payment-link moment in two engines</h3>
+          <p>ChatGPT listed competing providers without <a href="samples/ziina-ai-visibility-audit.html">Ziina</a>, and Perplexity named Mamo instead. Gemini included <a href="samples/ziina-ai-visibility-audit.html">Ziina</a> behind Stripe.</p>
+        </article>
+        <article class="pattern">
+          <div class="tag">Cross-engine lesson</div>
+          <h3>One overall score can hide different answer surfaces</h3>
+          <p><a href="samples/tabby-mini-audit.html">Tabby</a> had broad agreement across engines. <a href="samples/sarwa-mini-audit.html">Sarwa</a> and <a href="samples/ziina-ai-visibility-audit.html">Ziina</a> each had a query where Gemini included the brand while ChatGPT and Perplexity did not.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-label">Engine by engine</div>
+      <h2 class="sec-h">The same query can produce a different shortlist</h2>
+      <div class="prose">
+        <p>The clearest comparison is not a generic engine ranking. It is how each engine handled the buyer question where the brand's visibility was most revealing.</p>
+      </div>
+      <div class="matrix-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Brand</th>
+              <th scope="col">ChatGPT</th>
+              <th scope="col">Gemini</th>
+              <th scope="col">Perplexity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="samples/tabby-mini-audit.html">Tabby</a></td>
+              <td><span class="yes">First pick</span> on the flagship BNPL query</td>
+              <td><span class="yes">First pick</span> on the flagship BNPL query</td>
+              <td><span class="yes">First pick</span> on the flagship BNPL query</td>
+            </tr>
+            <tr>
+              <td><a href="samples/sarwa-mini-audit.html">Sarwa</a></td>
+              <td><span class="no">Absent</span> on the expat index-fund query</td>
+              <td><span class="yes">Present</span> on the expat index-fund query</td>
+              <td><span class="no">Absent</span> on the expat index-fund query</td>
+            </tr>
+            <tr>
+              <td><a href="samples/ziina-ai-visibility-audit.html">Ziina</a></td>
+              <td><span class="no">Absent</span> on the payment-link query</td>
+              <td><span class="yes">Present</span> behind Stripe on the payment-link query</td>
+              <td><span class="no">Absent</span> on the payment-link query</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">The <a href="samples/tabby-mini-audit.html">Tabby</a> and <a href="samples/sarwa-mini-audit.html">Sarwa</a> results come from mini-audits with repeated captures. The <a href="samples/ziina-ai-visibility-audit.html">Ziina</a> result comes from its full audit. Each statement above is limited to the named query and captured engine answers.</p>
+
+      <div class="takeaway">
+        <article class="take">
+          <h3>Category leadership can be unanimous</h3>
+          <p><a href="samples/tabby-mini-audit.html">Tabby</a> shows what broad agreement looks like: every engine selected the same flagship-query leader.</p>
+        </article>
+        <article class="take">
+          <h3>A useful query can expose the real gap</h3>
+          <p><a href="samples/sarwa-mini-audit.html">Sarwa</a> had a solid overall score, yet two engines omitted it when an expat asked how to start with index funds.</p>
+        </article>
+        <article class="take">
+          <h3>Presence is not portable between engines</h3>
+          <p><a href="samples/ziina-ai-visibility-audit.html">Ziina</a> appeared in Gemini's payment-link answer but not in the equivalent ChatGPT or Perplexity captures.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:24px;">
+    <div class="wrap">
+      <div class="cta-band">
+        <div class="sec-label">Your own visibility</div>
+        <h2>See who the answer engines recommend in your category</h2>
+        <p>Explore the automated WhoCitesYou audit for your brand.</p>
+        <a class="btn btn-primary btn-lg" href="index.html#audit">Explore the audit</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="brand"><span class="who">Who</span><span class="cites">Cites</span><span class="you">You</span></span>
+        <p>Automated AI visibility audit software from Deep Mist AI FZE LLC.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="index.html#audit">The audit</a>
+          <a href="index.html#samples">Sample reports</a>
+          <a href="index.html#start">Free mini-audit</a>
+        </div>
+        <div class="foot-col">
+          <h4>Learn</h4>
+          <a href="what-is-geo.html">What is GEO?</a>
+          <a href="methodology.html">Our methodology</a>
+          <a href="gpt-5-6-brand-visibility.html">Model release visibility</a>
+          <a href="ai-visibility-uae-fintech.html">UAE fintech visibility</a>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="index.html#about">About</a>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="refunds.html">Refunds</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Deep Mist AI FZE LLC · Ajman Media City Free Zone, UAE</span>
+      <span>Prices in USD</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
